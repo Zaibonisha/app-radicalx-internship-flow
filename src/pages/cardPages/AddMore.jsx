@@ -262,68 +262,182 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 }
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onThirdCardComponentClick }) => {
+const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [isValid, setIsValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [validationResults, setValidationResults] = useState({});
+  const [errorMessages, setErrorMessages] = useState({});
 
   const handleLinkClick = () => {
+    setIsChecked(true);
+    setIsFieldOpen(prevState => !prevState);
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const handleCardClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const validateFields = () => {
+    const results = {};
+    const errors = {};
+
+    if (!title) {
+      results.title = false;
+      errors.title = 'Title is required.';
+    } else {
+      results.title = true;
+    }
+
+    // Perform similar validations for other fields
+
+    setValidationResults(results);
+    setErrorMessages(errors);
+
+    return Object.values(results).every(value => value);
+  };
+
+  const handleSubmit = () => {
+    const isValid = validateFields();
+
     if (isValid) {
-      setIsChecked(true);
-      setIsFieldOpen(prevState => !prevState);
-      onThirdCardComponentClick();
+      console.log('Form submitted successfully!');
+    } else {
+      console.log('Form validation failed.');
     }
   };
 
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
-
+    const [options, setOptions] = useState(['Option 1', 'Option 2']);
+  
     const handleSearchChange = (event) => {
-      const value = event.target.value;
-      setSearchText(value);
-      validateFields(value);
-    };
-
-    const validateFields = (value) => {
-      // Perform your validation logic for the search field
-      const isValid = value.length > 0;
-      setIsValid(isValid);
-      setErrorMessage(isValid ? '' : 'Invalid search field.');
-    };
-
+      setSearchText(event.target.value);
+    }
+  
+    
+    const handleDeleteOption = (index) => {
+      const newOptions = [...options];
+      newOptions.splice(index, 1);
+      setOptions(newOptions);
+    }
+    const handleDrop = (event) => {
+      event.preventDefault();
+      const files = event.dataTransfer.files;
+      const newOptions = [...options];
+      for (let i = 0; i < files.length; i++) {
+        newOptions.push(files[i].name);
+      }
+      setOptions(newOptions);
+    }
+  
+    
+  
+    const handleButtonClick = () => {
+      document.getElementById('fileInput').click();
+    }
+  
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
-              Survey 2
+              Duration
             </Typography>
+            
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <SearchIcon style={{ marginRight: '10px' }} />
-              <input type="text" value={searchText} onChange={handleSearchChange} placeholder="Search..." style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }} />
+              <Button variant="outlined"
+              color="primary"
+        
+                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
+                Drag and Drop Files  <CloudUploadIcon/>
+              </Button>
+              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
             </div>
-            {errorMessage && <span style={{ color: 'red' }}>{errorMessage}</span>}
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {options.map((option, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
+                    {option}
+                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Typography variant="h5" component="h4">
+              Timeline
+            </Typography>
+            
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <Button variant="outlined"
+              color="primary"
+        
+                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
+                Drag and Drop Files  <CloudUploadIcon/>
+              </Button>
+              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {options.map((option, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
+                    {option}
+                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Typography variant="h5" component="h4">
+              Deliverables
+            </Typography>
+            
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <Button variant="outlined"
+              color="primary"
+        
+                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
+                Drag and Drop Files  <CloudUploadIcon/>
+              </Button>
+              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {options.map((option, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
+                    {option}
+                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            
           </CardContent>
         </Card>
+      
       </div>
+      
     );
-  };
+  }
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
-
+      
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: isExpanded ? '15vw' : '5vw', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} onClick={handleCardClick}>
           <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
               <div style={{ marginBottom: '10px' }}>
-                <Typography component="h6">
-                  Survey 2
+                <Typography  component="h6">
+                  Schedule
                 </Typography>
               </div>
               <div>
@@ -337,7 +451,36 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                 <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
               )}
             </div>
+            {isExpanded && (
+              <div style={{ display: 'flex', alignItems: 'left' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {/* First nested flexbox */}
+                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+                      <MenuIcon /> 
+                      Duration
+                    </Typography>
+                  </div>
 
+                  {/* Second nested flexbox */}
+                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+                      <MenuIcon /> 
+                      Timeline
+                    </Typography>
+                  </div>
+
+                  {/* Third nested flexbox */}
+                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+                      <MenuIcon />
+                      Deliverables
+                    </Typography>
+                  </div>
+                  <AddMoreButton/>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -346,10 +489,14 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
           <OptionsPanel />
         </div>
       )}
+
+      {/* Display error messages for the title field */}
+      {!validationResults.title && (
+        <div style={{ color: 'red' }}>{errorMessages.title}</div>
+      )}
     </div>
   );
 }
-
 const FourthCardComponent = ({
   title,
   description,
@@ -603,7 +750,7 @@ const FourthCardComponent = ({
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
               <div style={{ marginBottom: '10px' }}>
-                <Typography component="h6">{title}</Typography>
+                <Typography component="h6">Resources</Typography>
               </div>
               <div>
                 <Link

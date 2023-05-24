@@ -1,0 +1,76 @@
+{
+    "internships": [
+        {
+            "internship-description": {
+                "category":[
+                    "Technology", "Development", "Design"
+                ],
+                "description" : "This is an internship description.",
+                "location" : "New York",
+                "benefits" : "Example benefits",
+                "intro-video" : "https://link-to-video" ,
+                "mentor-details" : {
+                    "name" : "Peter Smith",
+                    "profile-photo" : "https",
+                    "email-address" : "peter.smoth@xyz.co",
+                    "linkedin-url" : "https"
+                },
+                "recommended-roles" : [
+                    "Front-end",
+                    "Back-end",
+                    "UX-Design"
+
+
+                ],
+                "wlinks" : [
+                    "https://mycompany.com",
+                    "https://twitter.com/mycompany"
+                ]
+            },
+            
+        
+            "internship Guide" : {
+                 "overview": [
+                    "Brief",
+                    "Requirements",
+                    "Milestone"
+
+                 ],
+                 "Schedule": [
+                    "Duration",
+                    "Timeline",
+                    "Deliverables"
+
+                 ],
+                 "Resources": [
+                    "Curated Resources",
+                    "Events"
+                 ]
+
+
+            },
+
+            "Surveys" : {
+                "Survey 1": [
+                    "Survey 1"
+                ],
+                "Survey 2": [
+                    "Survey 2"
+                ]
+            },
+
+            "Settings" :{
+                "Basic Settings": [
+                    "Internship URL"
+                ],
+                "Hero Image": {
+                    "Image": "https"
+                }
+            }
+
+
+                    
+        }
+    ]
+       
+}

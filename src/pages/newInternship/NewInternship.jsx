@@ -15,6 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import { useDropzone } from 'react-dropzone';
@@ -753,65 +754,89 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
 const NinethCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onNinethCardComponentClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [url, setUrl] = useState('');
-  const [validationError, setValidationError] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
     onNinethCardComponentClick();
-    // calling the function here
+  // calling the function here
   };
   
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value);
-  }
+  const AddUrlPanel = () => {
+    const [url, setUrl] = useState('');
 
-  const handleAddClick = () => {
-    // Perform field validation
-    if (url.trim() === '') {
-      setValidationError('URL is required.');
-    } else {
-      // TODO: Implement functionality to add the URL
-      setUrl('');
-      setValidationError('');
+    const handleUrlChange = (event) => {
+      setUrl(event.target.value);
     }
+
+    const handleAddClick = () => {
+      // TODO: Implement functionality to add the URL
+    }
+
+    return (
+      <div style={{ position: 'relative', minWidth: '200px' }}>
+        <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+          <CardContent>
+            <Typography variant="h5" component="h4">
+              Web Links and Resources
+            </Typography>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <AddIcon style={{ marginRight: '10px' }} />
+              <input type="text" value={url} onChange={handleUrlChange} placeholder="Enter URL..." style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }} />
+            </div>
+            <div style={{ display: 'flex' }}>
+              <button onClick={handleAddClick} style={{ backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px' }}>Add</button>
+              <CloudUploadIcon onClick={handleAddClick} />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
-      {/* Rest of the code */}
+      <div style={{ display: 'flex', alignItems: 'top-left' }}>
+        <MenuIcon />
+      </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '75px', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
-            {/* Rest of the code */}
-          </CardContent>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+    <IconButton
+      edge="start"
+      color="black"
+      aria-label="menu"
+    >
+      
+    </IconButton>
+    <Typography variant="h7" component="h6">
+      Web Links & Resources
+    </Typography>
+    {isChecked && (
+      <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
+    )}
+  </div>
+  <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
+    <IconButton
+      edge="start"
+      color="black"
+      aria-label="back"
+    >
+      <ArrowRightIcon />
+    </IconButton>
+  </Link>
+</CardContent>
         </Card>
       </div>
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
-            <CardContent>
-              <Typography variant="h5" component="h4">
-                Web Links and Resources
-              </Typography>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                <AddIcon style={{ marginRight: '10px' }} />
-                <input type="text" value={url} onChange={handleUrlChange} placeholder="Enter URL..." style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }} />
-              </div>
-              {validationError && <div style={{ color: 'red', marginBottom: '10px' }}>{validationError}</div>}
-              <div style={{ display: 'flex' }}>
-                <button onClick={handleAddClick} style={{ backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px' }}>Add</button>
-                <CloudUploadIcon onClick={handleAddClick} />
-              </div>
-            </CardContent>
-          </Card>
+          <AddUrlPanel />
         </div>
       )}
     </div>
   );
 }
-
 
 const AddMoreButton = ({ onAddCard }) => {
   const handleAddMore = () => {
@@ -875,21 +900,37 @@ function TopCardComponent({ isNinethCardComponentClicked }) {
 }
 
 
-function SecondTopCardComponent() {
+function SecondTopCardComponent({ isNinethCardComponentClicked }) {
+  const [isLinkClicked, setIsLinkClicked] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsLinkClicked(true);
+    // Call any other functions you need to handle the link click here
+  };
+
   return (
-    
     <Card style={{ height: '75px', width: '85vw', backgroundColor: '#f0f0f0', position: 'relative' }}>
       <CardContent style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <DataUsageIcon style={{ color:'gray', marginRight: '5px' }} />
+        {isNinethCardComponentClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
           <Typography style={{ textAlign: 'left', color: 'black' }} variant="body1" component="p">
             Internship Description
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <DataUsageIcon style={{ color:'lightgray', marginRight: '5px' }} />
-          <Typography style={{ textAlign: 'right', color: 'lightgrey' }} variant="body1" component="p">
+          <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
+          <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
             Additional Details
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {isNinethCardComponentClicked ? (
+            <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} />
+          ) : (
+            <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />
+          )}
+          <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
+            Review & Submit
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -898,17 +939,10 @@ function SecondTopCardComponent() {
             Review & Submit
           </Typography>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
-          <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
-             Review & Submit
-          </Typography>
-        </div>
       </CardContent>
     </Card>
   );
 }
-
 
 
 function NewInternship() {
@@ -922,7 +956,7 @@ function NewInternship() {
     // JSX content using TopCardComponent and CardComponent
     <div>
       <TopCardComponent isNinethCardComponentClicked={isNinethCardComponentClicked} />
-      <SecondTopCardComponent />
+      <SecondTopCardComponent isNinethCardComponentClicked={isNinethCardComponentClicked} />
       <SecondCardComponent/>
       <ThirdCardComponent/>
       <FourthCardComponent/>
