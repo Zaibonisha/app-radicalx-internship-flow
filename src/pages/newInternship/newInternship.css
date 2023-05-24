@@ -1,0 +1,40 @@
+.newInternship {
+  flex: 4;
+}
+
+.addInternshipForm {
+  margin-top: 10px;
+}
+
+.addInternshipItem {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.addInternshipItem > label {
+  color: gray;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.addInternshipItem > input {
+  padding: 10px;
+}
+
+.addInternshipItem > select {
+  padding: 10px;
+}
+
+.addInternshipButton {
+  width: 200px;
+    border: none;
+    background-color: darkblue;
+    color: white;
+    padding: 7px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+}
