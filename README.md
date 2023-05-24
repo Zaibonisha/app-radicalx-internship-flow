@@ -1,8 +1,21 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+npx create-react-app intern-dashboard
+cd intern-dashboard
 
-## Available Scripts
+Instalations:
+* npm i recharts
+* npm i @mui/material @emotion/react @emotion/styled
+* npm i react-router-dom
+
+## Description
+
+* Front-End project for RadicalX e-learning platform
+* Sidebar
+* Chart
+* Table
+* Title
 
 In the project directory, you can run:
 
@@ -68,3 +81,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
