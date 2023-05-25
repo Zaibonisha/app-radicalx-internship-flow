@@ -924,11 +924,7 @@ function SecondTopCardComponent({ isNinethCardComponentClicked }) {
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {isNinethCardComponentClicked ? (
-            <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} />
-          ) : (
-            <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />
-          )}
+          <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
           <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
             Review & Submit
           </Typography>
