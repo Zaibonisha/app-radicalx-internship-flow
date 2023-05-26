@@ -129,84 +129,53 @@
   export const interships = [
     {
       id: 1,
-      name: "Apple Airpods",
+      name: "Web Development",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="web-development.jfif" alt="" />,
       status: "active",
       
     },
     {
       id: 2,
-      name: "Apple Airpods",
+      name: "Mobile Development",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="mobile development.png" alt="" />,
       status: "active",
       
     },
     {
       id: 3,
-      name: "Apple Airpods",
+      name: "Data Analytics",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="data-analytics.png" alt="" />,
       status: "active",
      
     },
     {
       id: 4,
-      name: "Apple Airpods",
+      name: "Graphic Design",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="graphic-design2.png" alt="" />,
       status: "active",
       
     },
     {
       id: 5,
-      name: "Apple Airpods",
+      name: "Project Management",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="project-manaement.png" alt="" />,
       status: "active",
       
     },
     {
       id: 6,
-      name: "Apple Airpods",
+      name: "UI/UX",
       img:
-      <img src="side-avatar.jpg" alt="" />,
+      <img src="ui-ux.jfif" alt="" />,
       status: "active",
       
     },
-    {
-      id: 7,
-      name: "Apple Airpods",
-      img:
-      <img src="side-avatar.jpg" alt="" />,
-      status: "active",
-      
-    },
-    {
-      id: 8,
-      name: "Apple Airpods",
-      img:
-      <img src="side-avatar.jpg" alt="" />,
-      status: "active",
-      
-    },
-    {
-      id: 9,
-      name: "Apple Airpods",
-      img:
-      <img src="side-avatar.jpg" alt="" />,
-      status: "active",
-      
-    },
-    {
-      id: 10,
-      name: "Apple Airpods",
-      img:
-      <img src="side-avatar.jpg" alt="" />,
-      status: "active",
-      
-    },
+    
   ];
   
 
