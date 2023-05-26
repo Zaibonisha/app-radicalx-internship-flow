@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Chart from '../components/Internships';
-import { enrolmentData } from "../dummyData";
+import { enrolmentData } from "../Data";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
