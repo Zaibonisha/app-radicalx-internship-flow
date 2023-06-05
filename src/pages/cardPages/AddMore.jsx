@@ -23,6 +23,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Collapse from '@mui/material/Collapse';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import axios from 'axios';
 //import SecondCardComponent from '../components/SecondCardComponent';
 
 // Define CardComponent function component separately
@@ -262,7 +263,14 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 }
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const ThirdCardComponent = ({
+  title,
+  description,
+  location,
+  category,
+  categoryDescription,
+  linkTo,
+}) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -272,7 +280,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen((prevState) => !prevState);
   };
 
   const handleExpandClick = () => {
@@ -299,16 +307,39 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     setValidationResults(results);
     setErrorMessages(errors);
 
-    return Object.values(results).every(value => value);
+    return Object.values(results).every((value) => value);
   };
 
   const handleSubmit = () => {
     const isValid = validateFields();
 
     if (isValid) {
-      console.log('Form submitted successfully!');
+      const internship = {
+        title: title,
+        description: description,
+        location: location,
+        category: category,
+        categoryDescription: categoryDescription,
+      };
+
+      // Make a request to add the internship object to the database
+      addInternshipToDatabase(internship);
     } else {
       console.log('Form validation failed.');
+    }
+  };
+
+  const addInternshipToDatabase = async (internship) => {
+    try {
+      const response = await axios.post(
+        'https://example.com/api/internships',
+        internship
+      );
+      console.log('Internship added successfully:', response.data);
+      // Handle success, e.g., show a success message to the user
+    } catch (error) {
+      console.error('Error adding internship:', error);
+      // Handle error, e.g., show an error message to the user
     }
   };
 

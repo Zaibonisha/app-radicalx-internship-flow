@@ -20,13 +20,13 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import { useDropzone } from 'react-dropzone';
 import { useState } from 'react';
-
+import axios from 'axios'; 
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 //import SecondCardComponent from '../components/SecondCardComponent';
 
 // Define CardComponent function component separately
 
-const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const SecondCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -37,6 +37,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+    addInternshipToDatabase();
   };
 
   const handleSearchChange = (event) => {
@@ -60,6 +61,34 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     const newOptions = [...options];
     newOptions.splice(index, 1);
     setOptions(newOptions);
+  };
+
+  const addInternshipToDatabase = () => {
+    if (!isValid) {
+      return;
+    }
+
+    // Make a request to your database or API to add the internship object
+    // Use the value from the searchText or any other necessary fields
+    // Example using fetch:
+    fetch('https://example.com/api/internships', {
+      method: 'POST',
+      body: JSON.stringify({ searchText }), // Modify this according to your data structure
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Handle the response
+        if (response.ok) {
+          console.log('Internship added to the database successfully');
+        } else {
+          throw new Error('Failed to add the internship to the database');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const OptionsPanel = () => (
@@ -143,7 +172,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 };
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const ThirdCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -153,6 +182,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+    addInternshipToDatabase();
   };
 
   const handleSearchChange = (event) => {
@@ -170,6 +200,34 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     // Return true if the field is valid, false otherwise
     // You can check for required field, length limits, format constraints, etc.
     return value.length > 0;
+  };
+
+  const addInternshipToDatabase = () => {
+    if (!isValid) {
+      return;
+    }
+
+    // Make a request to your database or API to add the internship object
+    // Use the value from the searchText or any other necessary fields
+    // Example using fetch:
+    fetch('https://example.com/api/internships', {
+      method: 'POST',
+      body: JSON.stringify({ searchText }), // Modify this according to your data structure
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Handle the response
+        if (response.ok) {
+          console.log('Internship added to the database successfully');
+        } else {
+          throw new Error('Failed to add the internship to the database');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const OptionsPanel = () => (
@@ -235,7 +293,8 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
   );
 };
 
-const FourthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+
+const FourthCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -245,6 +304,7 @@ const FourthCardComponent = ({ title, description, location, category, categoryD
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+    addInternshipToDatabase();
   };
 
   const handleSearchChange = (event) => {
@@ -262,6 +322,34 @@ const FourthCardComponent = ({ title, description, location, category, categoryD
     // Return true if the field is valid, false otherwise
     // You can check for required field, length limits, format constraints, etc.
     return value.length > 0;
+  };
+
+  const addInternshipToDatabase = () => {
+    if (!isValid) {
+      return;
+    }
+
+    // Make a request to your database or API to add the internship object
+    // Use the value from the searchText or any other necessary fields
+    // Example using fetch:
+    fetch('https://example.com/api/internships', {
+      method: 'POST',
+      body: JSON.stringify({ searchText }), // Modify this according to your data structure
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Handle the response
+        if (response.ok) {
+          console.log('Internship added to the database successfully');
+        } else {
+          throw new Error('Failed to add the internship to the database');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const OptionsPanel = () => (
@@ -326,7 +414,8 @@ const FourthCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 };
-const FifthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+
+const FifthCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -334,10 +423,44 @@ const FifthCardComponent = ({ title, description, location, category, categoryDe
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+    addInternshipToDatabase();
   };
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
+  };
+
+  const validateFields = () => {
+    // Perform any validation here, return true if valid, false otherwise
+    return true;
+  };
+
+  const addInternshipToDatabase = () => {
+    if (!validateFields()) {
+      return;
+    }
+    
+    // Make a request to your database or API to add the internship object
+    // Use the values from the searchText or any other necessary fields
+    // Example using fetch:
+    fetch('https://example.com/api/internships', {
+      method: 'POST',
+      body: JSON.stringify({ searchText }), // Modify this according to your data structure
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Handle the response
+        if (response.ok) {
+          console.log('Internship added to the database successfully');
+        } else {
+          throw new Error('Failed to add the internship to the database');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const OptionsPanel = () => (
@@ -393,15 +516,19 @@ const FifthCardComponent = ({ title, description, location, category, categoryDe
     </div>
   );
 };
-const SixthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+
+const SixthCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [options, setOptions] = useState(['Intro Videos.mp4']);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
-    setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    if (validateFields()) {
+      setIsChecked(true);
+      setIsFieldOpen(prevState => !prevState);
+      addInternshipToDatabase();
+    }
   };
 
   const handleDrop = (event) => {
@@ -432,6 +559,30 @@ const SixthCardComponent = ({ title, description, location, category, categoryDe
 
     setErrorMessage('');
     return true;
+  };
+
+  const addInternshipToDatabase = () => {
+    // Make a request to your database or API to add the internship object
+    // Use the values from the options array or any other necessary fields
+    // Example using fetch:
+    fetch('https://example.com/api/internships', {
+      method: 'POST',
+      body: JSON.stringify({ files: options }), // Modify this according to your data structure
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        // Handle the response
+        if (response.ok) {
+          console.log('Internship added to the database successfully');
+        } else {
+          throw new Error('Failed to add the internship to the database');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const OptionsPanel = () => (
@@ -520,6 +671,8 @@ const SixthCardComponent = ({ title, description, location, category, categoryDe
   );
 };
 
+
+
 const SeventhCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -565,6 +718,49 @@ const SeventhCardComponent = ({ title, description, location, category, category
     }
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    // Perform additional validation if needed
+    if (name.trim() === '') {
+      setErrorMessage('Name field cannot be empty.');
+      return;
+    }
+    if (email.trim() === '') {
+      setErrorMessage('Email field cannot be empty.');
+      return;
+    }
+    if (linkedinUrl.trim() === '') {
+      setErrorMessage('LinkedIn URL field cannot be empty.');
+      return;
+    }
+
+    // Create the internship object
+    const internship = {
+      title,
+      description,
+      location,
+      category,
+      categoryDescription,
+      name,
+      email,
+      linkedinUrl
+    };
+
+    // Send the internship object to the backend API
+    axios.post('/api/internships', internship)
+      .then(response => {
+        // Handle successful response from the backend
+        console.log('Internship added to the database:', response.data);
+        // TODO: Perform any additional actions after successful validation and database storage
+      })
+      .catch(error => {
+        // Handle error response from the backend
+        console.error('Error adding internship:', error);
+        // TODO: Handle the error gracefully and show an appropriate message to the user
+      });
+  };
+
   const OptionsPanel = () => (
     <div style={{ position: 'relative', minWidth: '200px' }}>
       <Card style={{ height: '15vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
@@ -602,6 +798,7 @@ const SeventhCardComponent = ({ title, description, location, category, category
             />
           </div>
           {errorMessage && <span style={{ color: 'red' }}>{errorMessage}</span>}
+          <button onClick={handleFormSubmit}>Submit</button>
         </CardContent>
       </Card>
     </div>
@@ -652,6 +849,28 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+
+    if (!errorMessage) {
+      const internship = {
+        title,
+        description,
+        location,
+        category,
+        categoryDescription,
+        linkTo
+      };
+
+      // Make a request to the backend API or database to save the internship object
+      axios.post('/api/internships', internship)
+        .then(response => {
+          // Handle the response if needed
+          console.log('Internship object saved successfully:', response.data);
+        })
+        .catch(error => {
+          // Handle any errors that occurred during the request
+          console.error('Error saving internship object:', error);
+        });
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -714,15 +933,12 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '75px', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
-              
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
                 edge="start"
                 color="black"
                 aria-label="menu"
-              >
-                
-              </IconButton>
+              />
               <Typography variant="h7" component="h6">
                 Recommended Roles
               </Typography>
@@ -749,9 +965,10 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
       )}
     </div>
   );
+};
   
-}
-const NinethCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onNinethCardComponentClick }) => {
+
+const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -759,9 +976,8 @@ const NinethCardComponent = ({ title, description, location, category, categoryD
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
     onNinethCardComponentClick();
-  // calling the function here
   };
-  
+
   const AddUrlPanel = () => {
     const [url, setUrl] = useState('');
 
@@ -770,7 +986,7 @@ const NinethCardComponent = ({ title, description, location, category, categoryD
     }
 
     const handleAddClick = () => {
-      // TODO: Implement functionality to add the URL
+      
     }
 
     return (
@@ -803,30 +1019,28 @@ const NinethCardComponent = ({ title, description, location, category, categoryD
         <Card style={{ height: '75px', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-    <IconButton
-      edge="start"
-      color="black"
-      aria-label="menu"
-    >
-      
-    </IconButton>
-    <Typography variant="h7" component="h6">
-      Web Links & Resources
-    </Typography>
-    {isChecked && (
-      <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
-    )}
-  </div>
-  <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
-    <IconButton
-      edge="start"
-      color="black"
-      aria-label="back"
-    >
-      <ArrowRightIcon />
-    </IconButton>
-  </Link>
-</CardContent>
+              <IconButton
+                edge="start"
+                color="black"
+                aria-label="menu"
+              ></IconButton>
+              <Typography variant="h7" component="h6">
+                Web Links & Resources
+              </Typography>
+              {isChecked && (
+                <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
+              )}
+            </div>
+            <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
+              <IconButton
+                edge="start"
+                color="black"
+                aria-label="back"
+              >
+                <ArrowRightIcon />
+              </IconButton>
+            </Link>
+          </CardContent>
         </Card>
       </div>
       {isFieldOpen && (
