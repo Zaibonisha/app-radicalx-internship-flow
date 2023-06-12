@@ -68,7 +68,8 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     return Object.values(results).every(value => value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent form submission
     const isValid = validateFields();
 
     if (isValid) {
@@ -77,6 +78,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
       console.log('Form validation failed.');
     }
   };
+  
 
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
@@ -218,35 +220,41 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
               )}
             </div>
             {isExpanded && (
-              <div style={{ display: 'flex', alignItems: 'left' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {/* First nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Brief
-                    </Typography>
-                  </div>
+      <div style={{ display: 'flex', alignItems: 'left' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* First nested flexbox */}
+          <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Brief
+            </Typography>
+          </div>
 
-                  {/* Second nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Requirements
-                    </Typography>
-                  </div>
+          {/* Second nested flexbox */}
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Requirements
+            </Typography>
+          </div>
 
-                  {/* Third nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon />
-                      Milestones
-                    </Typography>
-                  </div>
-                  <AddMoreButton/>
-                </div>
-              </div>
-            )}
+          {/* Third nested flexbox */}
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon />
+              Milestones
+            </Typography>
+          </div>  
+          <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
+          <AddBoxOutlinedIcon style={{ marginRight: '5px' }} />ADD MORE
+          </button>
+          </form>
+          
+        </div>
+        
+      </div>
+    )}
           </CardContent>
         </Card>
       </div>
@@ -486,6 +494,7 @@ const ThirdCardComponent = ({
               <div style={{ display: 'flex', alignItems: 'left' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* First nested flexbox */}
+                  <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
                   <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
                     <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
                       <MenuIcon /> 
@@ -508,7 +517,11 @@ const ThirdCardComponent = ({
                       Deliverables
                     </Typography>
                   </div>
-                  <AddMoreButton/>
+                  <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
+          <AddBoxOutlinedIcon style={{ marginRight: '5px' }} />ADD MORE
+          </button>
+                  </form>
+                  
                 </div>
               </div>
             )}
@@ -551,6 +564,16 @@ const FourthCardComponent = ({
       onFourthCardComponentClick();
     } else {
       setErrorMessage('Please add options.');
+    }
+  };
+
+  const validateTitle = () => {
+    if (!title) {
+      setTitleError('Title is required.');
+    } else if (title.length > 100) {
+      setTitleError('Title must be less than 100 characters.');
+    } else {
+      setTitleError('');
     }
   };
 
@@ -804,6 +827,7 @@ const FourthCardComponent = ({
               <div style={{ display: 'flex', alignItems: 'left' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* First nested flexbox */}
+                  
                   <div
                     className="flexbox"
                     style={{
@@ -993,12 +1017,17 @@ function AddMore() {
   const handleFourthCardComponentClick = () => {
     setIsFourthCardComponentClicked(true);
   };
+  const handleSubmit = () => {
+    // Handle form submission logic here
+    // You can add your implementation for form submission
+    console.log('Form submitted!');
+  };
   return (
     // JSX content using TopCardComponent and CardComponent
     <div>
       <TopCardComponent isFourthCardComponentClicked={isFourthCardComponentClicked} />
       <SecondTopCardComponent isFourthCardComponentClicked={isFourthCardComponentClicked} />
-      <SecondCardComponent/>
+      <SecondCardComponent onSubmit={handleSubmit}/>
       <ThirdCardComponent/>
       <FourthCardComponent onFourthCardComponentClick={handleFourthCardComponentClick} />
       <AddChapterButton/>
