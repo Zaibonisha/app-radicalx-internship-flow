@@ -112,7 +112,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '30vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
               Brief
@@ -383,7 +383,7 @@ const ThirdCardComponent = ({
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '30vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
               Duration
@@ -653,7 +653,7 @@ const FourthCardComponent = ({
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '35vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
               Duration
