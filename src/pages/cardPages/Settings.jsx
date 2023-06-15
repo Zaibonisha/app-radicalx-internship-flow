@@ -24,7 +24,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Collapse from '@mui/material/Collapse';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import  Checkbox  from '@mui/material/Checkbox';
-
+import axios from 'axios';
 
 
 
@@ -35,7 +35,7 @@ import  Checkbox  from '@mui/material/Checkbox';
 const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [validationResult, setValidationResult] = useState({ success: false, message: '' });
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -43,7 +43,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   };
 
   const handleCardClick = () => {
-    setIsExpanded(!isExpanded);
+    setIsFieldOpen(!isFieldOpen);
   };
 
   const OptionsPanel = () => {
@@ -51,23 +51,49 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     const [url, setUrl] = useState('');
     const [checkbox1, setCheckbox1] = useState(false);
     const [checkbox2, setCheckbox2] = useState(false);
-  
+
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
     };
-  
+
     const handleUrlChange = (event) => {
       setUrl(event.target.value);
+      setValidationResult({ success: false, message: '' });
     };
-  
+
     const handleCheckbox1Change = (event) => {
       setCheckbox1(event.target.checked);
     };
-  
+
     const handleCheckbox2Change = (event) => {
       setCheckbox2(event.target.checked);
     };
-  
+
+    const handleSubmit = async () => {
+      if (url.trim() === '') {
+        setValidationResult({ success: false, message: 'URL field is required' });
+      } else {
+        try {
+          // Perform additional validation or submit the data
+          const response = await axios.post('/api/internships', {
+            url,
+            checkbox1,
+            checkbox2,
+          });
+
+          // Assuming the server responds with the newly created internship object
+          const newInternship = response.data;
+
+          setValidationResult({ success: true, message: 'Success! Data submitted.' });
+          console.log('New internship:', newInternship);
+        } catch (error) {
+          // Handle any errors that occur during the request
+          setValidationResult({ success: false, message: 'Error occurred while submitting data' });
+          console.error(error);
+        }
+      }
+    };
+
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
@@ -75,9 +101,8 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
             <Typography variant="h5" component="h4">
               Internship URL
             </Typography>
-            
+
             <div>
-              
               <input type="text" value={url} onChange={handleUrlChange} placeholder="Enter URL" style={{ marginBottom: '10px', width: '100%', padding: '5px' }} />
             </div>
             <div>
@@ -97,7 +122,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
                 </Typography>
               </div>
             </div>
-            
+
             <div>
               <Typography variant="subtitle1" component="h6">
                 Security:
@@ -108,8 +133,15 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
                   Disable Text Copying
                 </Typography>
               </div>
-             
             </div>
+
+            {validationResult.message && (
+              <div style={{ color: validationResult.success ? 'green' : 'red' }}>
+                {validationResult.message}
+              </div>
+            )}
+
+            <button onClick={handleSubmit}>Submit</button>
           </CardContent>
         </Card>
       </div>
@@ -121,9 +153,9 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
-      
+
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '5vw', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} onClick={handleCardClick}>
+        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} onClick={handleCardClick}>
           <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
@@ -143,7 +175,6 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
                 <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
               )}
             </div>
-            
           </CardContent>
         </Card>
       </div>
@@ -154,7 +185,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
       )}
     </div>
   );
-}
+};
 const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onThirdCardComponentClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
