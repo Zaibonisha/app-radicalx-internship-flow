@@ -186,45 +186,76 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 };
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onThirdCardComponentClick }) => {
+const ThirdCardComponent = ({
+  title,
+  description,
+  location,
+  category,
+  categoryDescription,
+  linkTo,
+  onThirdCardComponentClick
+}) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  
+  const [titleError, setTitleError] = useState('');
+  const [imageError, setImageError] = useState('');
 
   const handleLinkClick = () => {
-    setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen(!isFieldOpen);
     onThirdCardComponentClick();
-    // calling the function here
   };
 
-  
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
     const [url, setUrl] = useState('');
     const [checkbox1, setCheckbox1] = useState(false);
-    
     const [selectedImage, setSelectedImage] = useState(null);
-  
+
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
     };
-  
+
     const handleUrlChange = (event) => {
       setUrl(event.target.value);
     };
-  
+
     const handleCheckbox1Change = (event) => {
       setCheckbox1(event.target.checked);
     };
-  
-    
-  
+
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
       setSelectedImage(file);
     };
-  
+
+    const validateTitle = () => {
+      if (!title) {
+        setTitleError('Title is required.');
+      } else {
+        setTitleError('');
+      }
+    };
+
+    const validateImage = () => {
+      if (!selectedImage) {
+        setImageError('Image is required.');
+      } else {
+        setImageError('');
+      }
+    };
+
+    const handleSubmit = () => {
+      validateTitle();
+      validateImage();
+
+      const isFormValid = !titleError && !imageError;
+
+      if (isFormValid) {
+        // TODO: Perform form submission
+      } else {
+        // TODO: Display error message or prevent form submission
+      }
+    };
+
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '15vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
@@ -242,21 +273,24 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                 style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
               />
             </div>
-            
+
             <div>
               <Typography variant="subtitle1" component="h6">
                 Upload Image:
               </Typography>
               <input type="file" onChange={handleImageUpload} accept="image/*" style={{ marginBottom: '10px' }} />
             </div>
+
+            {/* Display error messages */}
+            {titleError && <p>{titleError}</p>}
+            {imageError && <p>{imageError}</p>}
+
+            <button onClick={handleSubmit}>Submit</button>
           </CardContent>
         </Card>
       </div>
     );
   };
-  
- 
-  
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
@@ -265,7 +299,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
       </div>
 
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} >
+        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
@@ -281,11 +315,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                   </IconButton>
                 </Link>
               </div>
-              {isChecked && (
-                <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
-              )}
             </div>
-            
           </CardContent>
         </Card>
       </div>
@@ -296,8 +326,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
       )}
     </div>
   );
-}
-
+};
 
   const AddMoreButton = ({ onAddCard }) => {
     const handleAddMore = () => {
