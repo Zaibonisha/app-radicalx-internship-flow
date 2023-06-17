@@ -1,11 +1,27 @@
-import React from "react";
-import Head from "react-document-configuration";
+import React from 'react';
 
-export default function Title() {
-    return (
-        <div>
-            <Head title="Dashboard" icon="link_of_icon" />
-        
-        </div>
-    );
+export default function Title({ isLoggedIn, onLogout }) {
+  const handleLogout = () => {
+    onLogout();
+  };
+
+  return (
+    <div>
+      {isLoggedIn && (
+        <button
+          style={{
+            backgroundColor: 'purple',
+            color: 'white',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      )}
+    </div>
+  );
 }

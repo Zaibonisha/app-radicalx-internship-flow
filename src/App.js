@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import "./App.css";
 import Home from "./pages/Home";
@@ -10,16 +10,10 @@ import AddSurvey from "./pages/cardPages/AddSurvey";
 import Settings from "./pages/cardPages/Settings";
 import LoginPage from './pages/LoginPage';
 
-function App() {
+function Main() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    // Perform your login logic here
-    // You can make an API request to your server or handle it locally
-
-    // Example: Check if username and password are valid
-    // If valid, set isLoggedIn to true
-    // Otherwise, display an error message
     setIsLoggedIn(true);
   };
 
@@ -27,11 +21,15 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const location = useLocation();
+  const hideSidebar = location.pathname === '/login';
+
   return (
-    <BrowserRouter>
-      <Title />
+    <>
+      <Title isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <div className="container">
-        <Sidebar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        {!hideSidebar && <Sidebar isLoggedIn={isLoggedIn} onLogout={handleLogout} />}
+
         <Switch>
           <Route exact path="/login" render={() => (
             isLoggedIn ? <Redirect to="/" /> : <LoginPage onLogin={handleLogin} />
@@ -53,6 +51,14 @@ function App() {
           )} />
         </Switch>
       </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Main />
     </BrowserRouter>
   );
 }
