@@ -41,22 +41,23 @@ function LoginPage({ onLogin }) {
     <div
       className="login-container"
       style={{
-        backgroundColor: 'aliceblue',
+        backgroundImage: 'url("/cover3.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         padding: '80px',
-        width: '100vw', // Adjusted to use viewport width
-        height: '100vh', // Adjusted to use viewport height
+        width: '100vw',
+        height: '105vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center', // Updated to center the container vertically and horizontally
-        
+        alignItems: 'center',
         // other styles...
       }}
     >
       <div style={{
-        backgroundColor: 'pink',
+       backgroundColor: 'rgba(253, 190, 201, 0.5)',
         padding: '80px',
         width: '20vw', // Adjusted to use viewport width
-        height: '85vh', // Adjusted to use viewport height
+        height: '65vh', // Adjusted to use viewport height
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'top',
