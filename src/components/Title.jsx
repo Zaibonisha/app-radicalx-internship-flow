@@ -1,5 +1,5 @@
 import React from 'react';
-import Head from "react-document-configuration";
+
 
 export default function Title({ isLoggedIn, onLogout }) {
   const handleLogout = () => {
@@ -8,9 +8,7 @@ export default function Title({ isLoggedIn, onLogout }) {
 
   return (
     <div>
-      <div>
-        <Head title="Dashboard" icon="link_of_icon" />
-      </div>
+      
       <div>
         {isLoggedIn && (
           <button

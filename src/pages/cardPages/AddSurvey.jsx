@@ -30,84 +30,65 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 // Define CardComponent function component separately
 
+
 const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [titleError, setTitleError] = useState('');
-  const [descriptionError, setDescriptionError] = useState('');
+  const [questions, setQuestions] = useState([]);
 
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
   };
 
-  const validateFields = () => {
-    setTitleError('');
-    setDescriptionError('');
-
-    if (!title) {
-      setTitleError('Title is required');
-    }
-    if (!description) {
-      setDescriptionError('Description is required');
-    }
+  const handleAddQuestion = () => {
+    setQuestions([...questions, '']);
   };
 
-  const OptionsPanel = () => {
-    const [searchText, setSearchText] = useState('');
-    const [options, setOptions] = useState(['Option 1', 'Option 2']);
-  
-    const handleSearchChange = (event) => {
-      setSearchText(event.target.value);
-    }
-  
-    
-    const handleDeleteOption = (index) => {
-      const newOptions = [...options];
-      newOptions.splice(index, 1);
-      setOptions(newOptions);
-    }
-  
+  const handleQuestionChange = (index, value) => {
+    const newQuestions = [...questions];
+    newQuestions[index] = value;
+    setQuestions(newQuestions);
+  };
+
+  const handleDeleteQuestion = (index) => {
+    const newQuestions = [...questions];
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+  };
+
+  const QuestionList = () => {
     return (
-      <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
-          <CardContent>
-            <Typography variant="h5" component="h4">
-              Survey 1
-            </Typography>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <SearchIcon style={{ marginRight: '10px' }} />
-              <input type="text" value={searchText} onChange={handleSearchChange} placeholder="Search..." style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }} />
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {options.map((option, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
-                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
-                    {option}
-                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {questions.map((question, index) => (
+          <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+            <input
+              type="text"
+              value={question}
+              onChange={(event) => handleQuestionChange(index, event.target.value)}
+              placeholder="Enter question..."
+              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
+            />
+            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteQuestion(index)} />
+          </div>
+        ))}
       </div>
     );
-  }
+  };
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
-      
+
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '5vw', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} >
+        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
               <div style={{ marginBottom: '10px' }}>
-                <Typography  component="h6">
+                <Typography component="h6">
                   Survey 1
                 </Typography>
               </div>
@@ -122,71 +103,89 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
                 <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
               )}
             </div>
-            
           </CardContent>
         </Card>
       </div>
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <OptionsPanel />
+          <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+            <CardContent>
+              <Typography variant="h5" component="h4">
+                Add Questions
+              </Typography>
+              <QuestionList />
+              <button
+                style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
+                onClick={handleAddQuestion}
+              >
+                Add Question
+              </button>
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>
   );
-}
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo, onThirdCardComponentClick }) => {
+};
+const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  
-  
+  const [questions, setQuestions] = useState([]);
 
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
-    onThirdCardComponentClick();
-    // calling the function here
   };
 
-  
+  const handleAddQuestion = () => {
+    setQuestions([...questions, '']);
+  };
 
-  const OptionsPanel = () => {
-    const [searchText, setSearchText] = useState('');
+  const handleQuestionChange = (index, value) => {
+    const newQuestions = [...questions];
+    newQuestions[index] = value;
+    setQuestions(newQuestions);
+  };
 
-    const handleSearchChange = (event) => {
-      setSearchText(event.target.value);
-    }
+  const handleDeleteQuestion = (index) => {
+    const newQuestions = [...questions];
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+  };
 
+  const QuestionList = () => {
     return (
-      <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
-          <CardContent>
-            <Typography variant="h5" component="h4">
-              Survey 2
-            </Typography>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <SearchIcon style={{ marginRight: '10px' }} />
-              <input type="text" value={searchText} onChange={handleSearchChange} placeholder="Search..." style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }} />
-            </div>
-          </CardContent>
-        </Card>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {questions.map((question, index) => (
+          <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+            <input
+              type="text"
+              value={question}
+              onChange={(event) => handleQuestionChange(index, event.target.value)}
+              placeholder="Enter question..."
+              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
+            />
+            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteQuestion(index)} />
+          </div>
+        ))}
       </div>
     );
-  }
+  };
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
-      
+
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '5vw', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} >
+        <Card style={{ height: '5vw', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu" />
               <div style={{ marginBottom: '10px' }}>
-                <Typography  component="h6">
-                  Survey 2
+                <Typography component="h6">
+                  Survey 1
                 </Typography>
               </div>
               <div>
@@ -200,18 +199,30 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                 <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
               )}
             </div>
-            
           </CardContent>
         </Card>
       </div>
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <OptionsPanel />
+          <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+            <CardContent>
+              <Typography variant="h5" component="h4">
+                Add Questions
+              </Typography>
+              <QuestionList />
+              <button
+                style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
+                onClick={handleAddQuestion}
+              >
+                Add Question
+              </button>
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>
   );
-}
+};
 
 const AddSettingsButton = ({ onAddCard }) => {
     const handleAddMore = () => {
