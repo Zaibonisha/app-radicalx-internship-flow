@@ -390,7 +390,7 @@ const ThirdCardComponent = ({
   
   
   
-  function SecondTopCardComponent({ isThirdCardComponentClicked }) {
+  function StatusBar({ isThirdCardComponentClicked }) {
     const [ setIsLinkClicked] = useState(false);
   
     const handleLinkClick = () => {
@@ -443,7 +443,7 @@ const ThirdCardComponent = ({
       // JSX content using TopCardComponent and CardComponent
       <div>
         <TopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked} />
-        <SecondTopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked}/>
+        <StatusBar isThirdCardComponentClicked={isThirdCardComponentClicked}/>
         <SecondCardComponent/>
         <ThirdCardComponent onThirdCardComponentClick={handleThirdCardComponentClick}/>
         

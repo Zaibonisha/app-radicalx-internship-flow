@@ -35,6 +35,8 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [validationError, setValidationError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -57,6 +59,16 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     setQuestions(newQuestions);
   };
 
+  const validateFields = () => {
+    if (questions.length === 0) {
+      setValidationError(true);
+      setSuccessMessage('');
+    } else {
+      setValidationError(false);
+      setSuccessMessage('Fields are valid!');
+    }
+  };
+
   const QuestionList = () => {
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -72,6 +84,18 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
             <ClearIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteQuestion(index)} />
           </div>
         ))}
+        {isFieldOpen && (
+          <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+            <input
+              type="text"
+              value=""
+              onChange={() => {}}
+              placeholder="Enter question..."
+              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
+            />
+            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => {}} />
+          </div>
+        )}
       </div>
     );
   };
@@ -114,11 +138,23 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
                 Add Questions
               </Typography>
               <QuestionList />
+              {validationError && (
+                <p style={{ color: 'red' }}>Please add at least one question.</p>
+              )}
+              {successMessage && (
+                <p style={{ color: 'green' }}>{successMessage}</p>
+              )}
               <button
                 style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
                 onClick={handleAddQuestion}
               >
                 Add Question
+              </button>
+              <button
+                style={{ width: '10vw', backgroundColor: 'blue', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
+                onClick={validateFields}
+              >
+                Validate Fields
               </button>
             </CardContent>
           </Card>
@@ -127,10 +163,13 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 };
+
 const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [validationError, setValidationError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -153,6 +192,16 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     setQuestions(newQuestions);
   };
 
+  const validateFields = () => {
+    if (questions.length === 0) {
+      setValidationError(true);
+      setSuccessMessage('');
+    } else {
+      setValidationError(false);
+      setSuccessMessage('Fields are valid!');
+    }
+  };
+
   const QuestionList = () => {
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -168,6 +217,18 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
             <ClearIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteQuestion(index)} />
           </div>
         ))}
+        {isFieldOpen && (
+          <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+            <input
+              type="text"
+              value=""
+              onChange={() => {}}
+              placeholder="Enter question..."
+              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
+            />
+            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => {}} />
+          </div>
+        )}
       </div>
     );
   };
@@ -185,7 +246,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
               <IconButton edge="start" color="black" aria-label="menu" />
               <div style={{ marginBottom: '10px' }}>
                 <Typography component="h6">
-                  Survey 1
+                  Survey 2
                 </Typography>
               </div>
               <div>
@@ -210,11 +271,23 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                 Add Questions
               </Typography>
               <QuestionList />
+              {validationError && (
+                <p style={{ color: 'red' }}>Please add at least one question.</p>
+              )}
+              {successMessage && (
+                <p style={{ color: 'green' }}>{successMessage}</p>
+              )}
               <button
                 style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
                 onClick={handleAddQuestion}
               >
                 Add Question
+              </button>
+              <button
+                style={{ width: '10vw', backgroundColor: 'blue', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
+                onClick={validateFields}
+              >
+                Validate Fields
               </button>
             </CardContent>
           </Card>
@@ -223,7 +296,6 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     </div>
   );
 };
-
 const AddSettingsButton = ({ onAddCard }) => {
     const handleAddMore = () => {
       onAddCard();
@@ -305,7 +377,7 @@ const AddSettingsButton = ({ onAddCard }) => {
     );
   }
   
-  function SecondTopCardComponent({ isThirdCardComponentClicked }) {
+  function StatusBar({ isThirdCardComponentClicked }) {
     const [isLinkClicked, setIsLinkClicked] = useState(false);
   
     const handleLinkClick = () => {
@@ -356,7 +428,7 @@ const AddSettingsButton = ({ onAddCard }) => {
       // JSX content using TopCardComponent and CardComponent
       <div>
         <TopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked}/>
-        <SecondTopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked}/>
+        <StatusBar isThirdCardComponentClicked={isThirdCardComponentClicked}/>
         <SecondCardComponent/>
         <ThirdCardComponent onThirdCardComponentClick={handleThirdCardComponentClick}/>
         <AddSettingsButton/>

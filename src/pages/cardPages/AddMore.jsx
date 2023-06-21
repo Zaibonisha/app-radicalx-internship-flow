@@ -886,7 +886,7 @@ function TopCardComponent({ isFourthCardComponentClicked }) {
   );
 }
 
-function SecondTopCardComponent({ isFourthCardComponentClicked }) {
+function StatusBar({ isFourthCardComponentClicked }) {
   const [isLinkClicked, setIsLinkClicked] = useState(false);
 
   const handleLinkClick = () => {
@@ -943,7 +943,7 @@ function AddMore() {
     // JSX content using TopCardComponent and CardComponent
     <div>
       <TopCardComponent isFourthCardComponentClicked={isFourthCardComponentClicked} />
-      <SecondTopCardComponent isFourthCardComponentClicked={isFourthCardComponentClicked} />
+      <StatusBar isFourthCardComponentClicked={isFourthCardComponentClicked} />
       <SecondCardComponent onSubmit={handleSubmit}/>
       <ThirdCardComponent/>
       <FourthCardComponent onFourthCardComponentClick={handleFourthCardComponentClick} />

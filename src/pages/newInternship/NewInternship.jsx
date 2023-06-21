@@ -1114,7 +1114,7 @@ function TopCardComponent({ isNinethCardComponentClicked }) {
 }
 
 
-function SecondTopCardComponent({ isNinethCardComponentClicked }) {
+function StatusBar({ isNinethCardComponentClicked }) {
   const [isLinkClicked, setIsLinkClicked] = useState(false);
 
   const handleLinkClick = () => {
@@ -1166,7 +1166,7 @@ function NewInternship() {
     // JSX content using TopCardComponent and CardComponent
     <div>
       <TopCardComponent isNinethCardComponentClicked={isNinethCardComponentClicked} />
-      <SecondTopCardComponent isNinethCardComponentClicked={isNinethCardComponentClicked} />
+      <StatusBar isNinethCardComponentClicked={isNinethCardComponentClicked} />
       <SecondCardComponent/>
       <ThirdCardComponent/>
       <FourthCardComponent/>
