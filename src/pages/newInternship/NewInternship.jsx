@@ -36,7 +36,7 @@ const SecondCardComponent = ({ linkTo }) => {
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen((prevState) => !prevState);
     addInternshipToDatabase();
   };
 
@@ -78,39 +78,71 @@ const SecondCardComponent = ({ linkTo }) => {
         'Content-Type': 'application/json',
       },
     })
-      .then(response => {
+      .then((response) => {
         // Handle the response
         if (response.ok) {
           console.log('Internship added to the database successfully');
         } else {
-          throw new Error('Failed to add the internship to the database');
+          // Throw an error with the status code and status text
+          throw new Error(
+            `HTTP Error ${response.status}: ${response.statusText}`
+          );
         }
       })
-      .catch(error => {
-        console.error(error);
+      .catch((error) => {
+        // Display the error message based on the HTTP status code
+        let errorMessage;
+        if (error.message.startsWith('HTTP Error')) {
+          // Extract the status code and status text from the error message
+          const [statusCode, statusText] = error.message.split(':');
+          errorMessage = `HTTP Error ${statusCode.trim()}: ${statusText.trim()}`;
+        } else {
+          errorMessage = 'An error occurred while adding the internship.';
+        }
+        console.error(errorMessage);
+
+        // Update the state with the error message
+        setErrorMessage(errorMessage);
       });
   };
 
   const OptionsPanel = () => (
     <div style={{ position: 'relative', minWidth: '200px' }}>
-      <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+      <Card
+        style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}
+      >
         <CardContent>
           <Typography variant="h5" component="h4">
             Category
           </Typography>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+          <div
+            style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
+          >
             <SearchIcon style={{ marginRight: '10px' }} />
             <input
               type="text"
               value={searchText}
               onChange={handleSearchChange}
               placeholder="Search..."
-              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
+              style={{
+                flexGrow: '1',
+                border: 'none',
+                borderBottom: '1px solid #ccc',
+                padding: '5px',
+              }}
             />
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {options.map((option, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginRight: '10px',
+                  marginBottom: '10px',
+                }}
+              >
                 <button
                   style={{
                     width: '10vw',
@@ -124,7 +156,13 @@ const SecondCardComponent = ({ linkTo }) => {
                 >
                   {option}
                   <ClearIcon
-                    style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      cursor: 'pointer',
+                      width: '20px',
+                    }}
                     onClick={() => handleDeleteOption(index)}
                   />
                 </button>
@@ -137,19 +175,34 @@ const SecondCardComponent = ({ linkTo }) => {
   );
 
   return (
-    <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
+    <div
+      className="card-wrapper"
+      style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}
+    >
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '75px', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
-          <CardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Card
+          style={{
+            height: '75px',
+            width: '43vw',
+            cursor: 'pointer',
+            margin: '10px',
+            borderRadius: '10px',
+          }}
+        >
+          <CardContent
+            style={{ display: 'flex', justifyContent: 'space-between' }}
+          >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton edge="start" color="black" aria-label="menu"></IconButton>
+              <IconButton edge="start" color="black" aria-label="menu" />
               <Typography variant="h7" component="h6">
                 Category
               </Typography>
-              {isChecked && <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />}
+              {isChecked && (
+                <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
+              )}
             </div>
             <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
               <IconButton edge="start" color="black" aria-label="back">
@@ -172,6 +225,7 @@ const SecondCardComponent = ({ linkTo }) => {
     </div>
   );
 };
+
 const ThirdCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -344,11 +398,12 @@ const FourthCardComponent = ({ linkTo }) => {
         if (response.ok) {
           console.log('Internship added to the database successfully');
         } else {
-          throw new Error('Failed to add the internship to the database');
+          throw new Error(`Failed to add the internship to the database. Status: ${response.status}`);
         }
       })
       .catch(error => {
         console.error(error);
+        setErrorMessage(error.message);
       });
   };
 
@@ -419,10 +474,11 @@ const FifthCardComponent = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen((prevState) => !prevState);
     addInternshipToDatabase();
   };
 
@@ -435,11 +491,20 @@ const FifthCardComponent = ({ linkTo }) => {
     return true;
   };
 
+  const handleValidation = () => {
+    if (!validateFields()) {
+      setValidationMessage('Validation failed. Please check your inputs.');
+      return;
+    }
+    setValidationMessage('');
+    addInternshipToDatabase();
+  };
+
   const addInternshipToDatabase = () => {
     if (!validateFields()) {
       return;
     }
-    
+
     // Make a request to your database or API to add the internship object
     // Use the values from the searchText or any other necessary fields
     // Example using fetch:
@@ -450,7 +515,7 @@ const FifthCardComponent = ({ linkTo }) => {
         'Content-Type': 'application/json',
       },
     })
-      .then(response => {
+      .then((response) => {
         // Handle the response
         if (response.ok) {
           console.log('Internship added to the database successfully');
@@ -458,8 +523,9 @@ const FifthCardComponent = ({ linkTo }) => {
           throw new Error('Failed to add the internship to the database');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
+        setValidationMessage('An error occurred while adding the internship.');
       });
   };
 
@@ -479,6 +545,14 @@ const FifthCardComponent = ({ linkTo }) => {
               placeholder="Search..."
               style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
             />
+          </div>
+          <div style={{ marginTop: '10px' }}>
+            <button onClick={handleValidation}>Add Internship</button>
+            {validationMessage && (
+              <Typography variant="body1" style={{ marginTop: '10px' }}>
+                {validationMessage}
+              </Typography>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -517,18 +591,22 @@ const FifthCardComponent = ({ linkTo }) => {
   );
 };
 
-const SixthCardComponent = ({ linkTo }) => {
+const SixthCardComponent = ({
+  title,
+  description,
+  location,
+  category,
+  categoryDescription,
+  linkTo,
+}) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [options, setOptions] = useState(['Intro Videos.mp4']);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
 
   const handleLinkClick = () => {
-    if (validateFields()) {
-      setIsChecked(true);
-      setIsFieldOpen(prevState => !prevState);
-      addInternshipToDatabase();
-    }
+    setIsChecked(true);
+    setIsFieldOpen((prevState) => !prevState); // Toggle the value of isFieldOpen
   };
 
   const handleDrop = (event) => {
@@ -551,53 +629,76 @@ const SixthCardComponent = ({ linkTo }) => {
     document.getElementById('fileInput').click();
   };
 
-  const validateFields = () => {
-    if (options.length === 1) {
-      setErrorMessage('Please upload at least one file.');
-      return false;
+  const handleValidation = () => {
+    // Perform field validation
+    if (options.length === 0) {
+      setValidationMessage('Please add at least one file.');
+    } else {
+      // Add the internship object to the database
+      const internship = {
+        title,
+        description,
+        location,
+        category,
+        categoryDescription,
+        options,
+      };
+      axios.post('/api/internships', internship)
+        .then(response => {
+          // Handle success response
+          setValidationMessage('Success! Field is valid.');
+        })
+        .catch(error => {
+          // Handle error response
+          if (error.response) {
+            if (error.response.status === 400) {
+              setValidationMessage('Bad request. Please check your input.');
+            } else if (error.response.status === 401) {
+              setValidationMessage('Unauthorized. Please authenticate.');
+            } else if (error.response.status === 404) {
+              setValidationMessage('Endpoint not found.');
+            } else {
+              setValidationMessage('An error occurred. Please try again later.');
+            }
+          } else {
+            setValidationMessage('Network error. Please check your internet connection.');
+          }
+          console.error('Error adding internship:', error);
+        });
     }
-
-    setErrorMessage('');
-    return true;
-  };
-
-  const addInternshipToDatabase = () => {
-    // Make a request to your database or API to add the internship object
-    // Use the values from the options array or any other necessary fields
-    // Example using fetch:
-    fetch('https://example.com/api/internships', {
-      method: 'POST',
-      body: JSON.stringify({ files: options }), // Modify this according to your data structure
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        // Handle the response
-        if (response.ok) {
-          console.log('Internship added to the database successfully');
-        } else {
-          throw new Error('Failed to add the internship to the database');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
   };
 
   const OptionsPanel = () => (
     <div style={{ position: 'relative', minWidth: '200px' }}>
-      <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+      <Card
+        style={{
+          height: '10vw',
+          width: '40vw',
+          margin: '10px',
+          borderRadius: '10px',
+        }}
+      >
         <CardContent>
           <Typography variant="h5" component="h4">
             Intro Videos
           </Typography>
 
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '10px',
+            }}
+          >
             <Button
               variant="outlined"
               color="primary"
-              style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }}
+              style={{
+                backgroundColor: 'transparent',
+                border: '1px dashed grey',
+                color: 'purple',
+                width: '43vw',
+              }}
               onClick={handleButtonClick}
             >
               Drag and Drop Files <CloudUploadIcon />
@@ -607,12 +708,22 @@ const SixthCardComponent = ({ linkTo }) => {
               type="file"
               style={{ display: 'none' }}
               multiple
-              onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })}
+              onChange={(event) =>
+                handleDrop({ dataTransfer: { files: event.target.files } })
+              }
             />
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {options.map((option, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginRight: '10px',
+                  marginBottom: '10px',
+                }}
+              >
                 <button
                   style={{
                     width: '10vw',
@@ -626,26 +737,52 @@ const SixthCardComponent = ({ linkTo }) => {
                 >
                   {option}
                   <ClearIcon
-                    style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      cursor: 'pointer',
+                      width: '20px',
+                    }}
                     onClick={() => handleDeleteOption(index)}
                   />
                 </button>
               </div>
             ))}
           </div>
-          {errorMessage && <span style={{ color: 'red' }}>{errorMessage}</span>}
+          <div style={{ marginTop: '10px' }}>
+            <Button variant="contained" color="primary" onClick={handleValidation}>
+              Validate Field
+            </Button>
+            {validationMessage && (
+              <Typography variant="body1" style={{ marginTop: '10px' }}>
+                {validationMessage}
+              </Typography>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 
   return (
-    <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
+    <div
+      className="card-wrapper"
+      style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}
+    >
       <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '75px', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
+        <Card
+          style={{
+            height: '75px',
+            width: '43vw',
+            cursor: 'pointer',
+            margin: '10px',
+            borderRadius: '10px',
+          }}
+        >
           <CardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton edge="start" color="black" aria-label="menu"></IconButton>
@@ -663,15 +800,13 @@ const SixthCardComponent = ({ linkTo }) => {
         </Card>
       </div>
       {isFieldOpen && (
-        <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
+        <div className="field" style={{ display: 'flex', position: 'relative', flexGrow: 1 }}>
           <OptionsPanel />
         </div>
       )}
     </div>
   );
 };
-
-
 
 const SeventhCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
