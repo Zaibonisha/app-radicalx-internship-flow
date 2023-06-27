@@ -891,8 +891,24 @@ const SeventhCardComponent = ({ title, description, location, category, category
       })
       .catch(error => {
         // Handle error response from the backend
-        console.error('Error adding internship:', error);
-        // TODO: Handle the error gracefully and show an appropriate message to the user
+        if (error.response) {
+          const statusCode = error.response.status;
+          let errorMessage = '';
+
+          if (statusCode === 400) {
+            errorMessage = 'Bad Request: Invalid data.';
+          } else if (statusCode === 401) {
+            errorMessage = 'Unauthorized: You are not authorized to access this resource.';
+          } else if (statusCode === 404) {
+            errorMessage = 'Not Found: The requested resource was not found.';
+          } else {
+            errorMessage = 'An error occurred while processing your request.';
+          }
+
+          setErrorMessage(errorMessage);
+        } else {
+          setErrorMessage('An error occurred while processing your request.');
+        }
       });
   };
 
@@ -1003,7 +1019,7 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
         })
         .catch(error => {
           // Handle any errors that occurred during the request
-          console.error('Error saving internship object:', error);
+          handleRequestError(error);
         });
     }
   };
@@ -1022,6 +1038,46 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
     const newOptions = [...options];
     newOptions.splice(index, 1);
     setOptions(newOptions);
+  };
+
+  const handleRequestError = (error) => {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      const statusCode = error.response.status;
+      let errorMessage = '';
+
+      switch (statusCode) {
+        case 400:
+          errorMessage = 'Bad Request';
+          break;
+        case 401:
+          errorMessage = 'Unauthorized';
+          break;
+        case 403:
+          errorMessage = 'Forbidden';
+          break;
+        case 404:
+          errorMessage = 'Not Found';
+          break;
+        case 500:
+          errorMessage = 'Internal Server Error';
+          break;
+        // Add more cases for other status codes if needed
+
+        default:
+          errorMessage = 'An error occurred';
+      }
+
+      setErrorMessage(errorMessage);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No response received:', error.request);
+      setErrorMessage('No response received');
+    } else {
+      // Something else happened while setting up the request
+      console.error('Error setting up the request:', error.message);
+      setErrorMessage('Error setting up the request');
+    }
   };
 
   const OptionsPanel = () => (
@@ -1081,7 +1137,7 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
                 <CheckCircleIcon style={{ marginLeft: '10px', color:'purple' }} />
               )}
             </div>
-            <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
+            <Link href={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
               <IconButton
                 edge="start"
                 color="black"
@@ -1106,10 +1162,11 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
 const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen((prevState) => !prevState);
     onNinethCardComponentClick();
   };
 
@@ -1118,11 +1175,43 @@ const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
 
     const handleUrlChange = (event) => {
       setUrl(event.target.value);
-    }
+    };
 
     const handleAddClick = () => {
-      
-    }
+      // Perform validation here
+      if (url.trim() === '') {
+        setErrorMessage('URL cannot be empty.');
+        return;
+      }
+
+      // Make a request to the backend API or database to add the URL
+      axios
+        .post('/api/add-url', { url })
+        .then((response) => {
+          // Handle success
+          console.log('URL added successfully');
+          setUrl('');
+          setErrorMessage('');
+        })
+        .catch((error) => {
+          // Handle error
+          console.error('Error adding URL:', error);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            if (error.response.status === 400) {
+              setErrorMessage('Invalid URL.');
+            } else {
+              setErrorMessage('An error occurred while adding the URL.');
+            }
+          } else if (error.request) {
+            // The request was made but no response was received
+            setErrorMessage('No response from the server.');
+          } else {
+            // Something else happened while setting up the request
+            setErrorMessage('An error occurred while adding the URL.');
+          }
+        });
+    };
 
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
@@ -1139,11 +1228,12 @@ const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
               <button onClick={handleAddClick} style={{ backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px' }}>Add</button>
               <CloudUploadIcon onClick={handleAddClick} />
             </div>
+            {errorMessage && <span style={{ color: 'red' }}>{errorMessage}</span>}
           </CardContent>
         </Card>
       </div>
     );
-  }
+  };
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
@@ -1151,7 +1241,7 @@ const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
         <MenuIcon />
       </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '75px', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '75px', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
           <CardContent style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
@@ -1185,7 +1275,8 @@ const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
       )}
     </div>
   );
-}
+};
+
 
 const AddMoreButton = ({ onAddCard }) => {
   const handleAddMore = () => {
