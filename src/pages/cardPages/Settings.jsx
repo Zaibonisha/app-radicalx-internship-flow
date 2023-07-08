@@ -87,8 +87,27 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
           setValidationResult({ success: true, message: 'Success! Data submitted.' });
           console.log('New internship:', newInternship);
         } catch (error) {
-          // Handle any errors that occur during the request
-          setValidationResult({ success: false, message: 'Error occurred while submitting data' });
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            const statusCode = error.response.status;
+
+            if (statusCode === 400) {
+              setValidationResult({ success: false, message: 'Bad request. Please check your input.' });
+            } else if (statusCode === 401) {
+              setValidationResult({ success: false, message: 'Unauthorized. You are not allowed to perform this action.' });
+            } else if (statusCode === 500) {
+              setValidationResult({ success: false, message: 'Internal server error. Please try again later.' });
+            } else {
+              setValidationResult({ success: false, message: 'An error occurred while submitting data.' });
+            }
+          } else if (error.request) {
+            // The request was made but no response was received
+            setValidationResult({ success: false, message: 'No response received. Please try again later.' });
+          } else {
+            // Other error occurred
+            setValidationResult({ success: false, message: 'An error occurred while submitting data.' });
+          }
+
           console.error(error);
         }
       }
@@ -206,20 +225,10 @@ const ThirdCardComponent = ({
 
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
-    const [url, setUrl] = useState('');
-    const [checkbox1, setCheckbox1] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
-    };
-
-    const handleUrlChange = (event) => {
-      setUrl(event.target.value);
-    };
-
-    const handleCheckbox1Change = (event) => {
-      setCheckbox1(event.target.checked);
     };
 
     const handleImageUpload = (event) => {
@@ -227,13 +236,7 @@ const ThirdCardComponent = ({
       setSelectedImage(file);
     };
 
-    const validateTitle = () => {
-      if (!title) {
-        setTitleError('Title is required.');
-      } else {
-        setTitleError('');
-      }
-    };
+    
 
     const validateImage = () => {
       if (!selectedImage) {
@@ -243,14 +246,33 @@ const ThirdCardComponent = ({
       }
     };
 
-    const handleSubmit = () => {
-      validateTitle();
+    const handleSubmit = async () => {
       validateImage();
 
       const isFormValid = !titleError && !imageError;
 
       if (isFormValid) {
-        // TODO: Perform form submission
+        try {
+          // Create form data to send the image file
+          const formData = new FormData();
+          formData.append('image', selectedImage);
+
+          // Make a POST request to submit the form data
+          const response = await axios.post('/api/upload-image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+
+          // Assuming the server responds with the uploaded image URL
+          const imageUrl = response.data.url;
+
+          // TODO: Perform further actions with the image URL, such as saving it in a database
+
+          console.log('Image uploaded successfully:', imageUrl);
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
       } else {
         // TODO: Display error message or prevent form submission
       }
@@ -258,7 +280,7 @@ const ThirdCardComponent = ({
 
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '15vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
               Hero Image
@@ -282,7 +304,7 @@ const ThirdCardComponent = ({
             </div>
 
             {/* Display error messages */}
-            {titleError && <p>{titleError}</p>}
+           
             {imageError && <p>{imageError}</p>}
 
             <button onClick={handleSubmit}>Submit</button>

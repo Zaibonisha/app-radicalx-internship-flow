@@ -13,13 +13,13 @@ export default function Title({ isLoggedIn, onLogout }) {
         {isLoggedIn && (
           <button
             style={{
-              backgroundColor: 'purple',
+              backgroundColor: 'blue',
               color: 'white',
               padding: '10px 20px',
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
-              width: '12vw'
+              width: '10vw'
             }}
             onClick={handleLogout}
           >

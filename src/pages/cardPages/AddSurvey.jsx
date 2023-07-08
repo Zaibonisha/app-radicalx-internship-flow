@@ -37,6 +37,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   const [questions, setQuestions] = useState([]);
   const [validationError, setValidationError] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -63,9 +64,27 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     if (questions.length === 0) {
       setValidationError(true);
       setSuccessMessage('');
+      setErrorMessage('');
     } else {
       setValidationError(false);
       setSuccessMessage('Fields are valid!');
+      setErrorMessage('');
+    }
+  };
+
+  const handleRequestError = (statusCode) => {
+    if (statusCode === 400) {
+      setErrorMessage('Bad Request');
+    } else if (statusCode === 401) {
+      setErrorMessage('Unauthorized');
+    } else if (statusCode === 403) {
+      setErrorMessage('Forbidden');
+    } else if (statusCode === 404) {
+      setErrorMessage('Not Found');
+    } else if (statusCode === 500) {
+      setErrorMessage('Internal Server Error');
+    } else {
+      setErrorMessage('Unknown Error');
     }
   };
 
@@ -144,6 +163,9 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
               {successMessage && (
                 <p style={{ color: 'green' }}>{successMessage}</p>
               )}
+              {errorMessage && (
+                <p style={{ color: 'red' }}>{errorMessage}</p>
+              )}
               <button
                 style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
                 onClick={handleAddQuestion}
@@ -156,6 +178,12 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
               >
                 Validate Fields
               </button>
+              <button
+                style={{ width: '10vw', backgroundColor: 'red', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
+                onClick={() => handleRequestError(500)} // Example error code, you can change it based on your requirements
+              >
+                Simulate Error
+              </button>
             </CardContent>
           </Card>
         </div>
@@ -164,12 +192,13 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   );
 };
 
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const ThirdCardComponent= ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [validationError, setValidationError] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -196,9 +225,27 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     if (questions.length === 0) {
       setValidationError(true);
       setSuccessMessage('');
+      setErrorMessage('');
     } else {
       setValidationError(false);
       setSuccessMessage('Fields are valid!');
+      setErrorMessage('');
+    }
+  };
+
+  const handleRequestError = (statusCode) => {
+    if (statusCode === 400) {
+      setErrorMessage('Bad Request');
+    } else if (statusCode === 401) {
+      setErrorMessage('Unauthorized');
+    } else if (statusCode === 403) {
+      setErrorMessage('Forbidden');
+    } else if (statusCode === 404) {
+      setErrorMessage('Not Found');
+    } else if (statusCode === 500) {
+      setErrorMessage('Internal Server Error');
+    } else {
+      setErrorMessage('Unknown Error');
     }
   };
 
@@ -277,6 +324,9 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
               {successMessage && (
                 <p style={{ color: 'green' }}>{successMessage}</p>
               )}
+              {errorMessage && (
+                <p style={{ color: 'red' }}>{errorMessage}</p>
+              )}
               <button
                 style={{ width: '10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}
                 onClick={handleAddQuestion}
@@ -288,6 +338,12 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
                 onClick={validateFields}
               >
                 Validate Fields
+              </button>
+              <button
+                style={{ width: '10vw', backgroundColor: 'red', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
+                onClick={() => handleRequestError(500)} // Example error code, you can change it based on your requirements
+              >
+                Simulate Error
               </button>
             </CardContent>
           </Card>

@@ -38,7 +38,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen(prevState => !prevState);
+    setIsFieldOpen((prevState) => !prevState);
   };
 
   const handleExpandClick = () => {
@@ -65,7 +65,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     setValidationResults(results);
     setErrorMessages(errors);
 
-    return Object.values(results).every(value => value);
+    return Object.values(results).every((value) => value);
   };
 
   const handleSubmit = (event) => {
@@ -78,22 +78,33 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
       console.log('Form validation failed.');
     }
   };
-  
 
+  const handleServerError = (statusCode) => {
+    if (statusCode === 404) {
+      // Handle 404 Not Found error
+      console.error('Resource not found.');
+    } else if (statusCode === 500) {
+      // Handle 500 Internal Server Error
+      console.error('Internal server error occurred.');
+    } else {
+      // Handle other error codes
+      console.error('An error occurred. Status code: ', statusCode);
+    }
+  };
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
     const [options, setOptions] = useState(['Option 1', 'Option 2']);
-  
+
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
-    }
-  
-    
+    };
+
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
       setOptions(newOptions);
-    }
+    };
+
     const handleDrop = (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
@@ -102,13 +113,12 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
         newOptions.push(files[i].name);
       }
       setOptions(newOptions);
-    }
-  
-    
-  
+    };
+
     const handleButtonClick = () => {
       document.getElementById('fileInput').click();
-    }
+    };
+
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
@@ -271,14 +281,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 }
-const ThirdCardComponent = ({
-  title,
-  description,
-  location,
-  category,
-  categoryDescription,
-  linkTo,
-}) => {
+const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -318,53 +321,43 @@ const ThirdCardComponent = ({
     return Object.values(results).every((value) => value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent form submission
     const isValid = validateFields();
 
     if (isValid) {
-      const internship = {
-        title: title,
-        description: description,
-        location: location,
-        category: category,
-        categoryDescription: categoryDescription,
-      };
-
-      // Make a request to add the internship object to the database
-      addInternshipToDatabase(internship);
+      console.log('Form submitted successfully!');
     } else {
       console.log('Form validation failed.');
     }
   };
 
-  const addInternshipToDatabase = async (internship) => {
-    try {
-      const response = await axios.post(
-        'https://example.com/api/internships',
-        internship
-      );
-      console.log('Internship added successfully:', response.data);
-      // Handle success, e.g., show a success message to the user
-    } catch (error) {
-      console.error('Error adding internship:', error);
-      // Handle error, e.g., show an error message to the user
+  const handleServerError = (statusCode) => {
+    if (statusCode === 404) {
+      // Handle 404 Not Found error
+      console.error('Resource not found.');
+    } else if (statusCode === 500) {
+      // Handle 500 Internal Server Error
+      console.error('Internal server error occurred.');
+    } else {
+      // Handle other error codes
+      console.error('An error occurred. Status code: ', statusCode);
     }
   };
-
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
     const [options, setOptions] = useState(['Option 1', 'Option 2']);
-  
+
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
-    }
-  
-    
+    };
+
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
       setOptions(newOptions);
-    }
+    };
+
     const handleDrop = (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
@@ -373,20 +366,19 @@ const ThirdCardComponent = ({
         newOptions.push(files[i].name);
       }
       setOptions(newOptions);
-    }
-  
-    
-  
+    };
+
     const handleButtonClick = () => {
       document.getElementById('fileInput').click();
-    }
+    };
+
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
-              Duration
+              Brief
             </Typography>
             
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -409,7 +401,7 @@ const ThirdCardComponent = ({
               ))}
             </div>
             <Typography variant="h5" component="h4">
-              Timeline
+              Requirements
             </Typography>
             
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -432,7 +424,7 @@ const ThirdCardComponent = ({
               ))}
             </div>
             <Typography variant="h5" component="h4">
-              Deliverables
+              Milestones
             </Typography>
             
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -491,40 +483,41 @@ const ThirdCardComponent = ({
               )}
             </div>
             {isExpanded && (
-              <div style={{ display: 'flex', alignItems: 'left' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {/* First nested flexbox */}
-                  <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'37vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Duration
-                    </Typography>
-                  </div>
+      <div style={{ display: 'flex', alignItems: 'left' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* First nested flexbox */}
+          <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'37vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Duration
+            </Typography>
+          </div>
 
-                  {/* Second nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Timeline
-                    </Typography>
-                  </div>
+          {/* Second nested flexbox */}
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Timeline
+            </Typography>
+          </div>
 
-                  {/* Third nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon />
-                      Deliverables
-                    </Typography>
-                  </div>
-                  <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
+          {/* Third nested flexbox */}
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon />
+              Deliverables
+            </Typography>
+          </div>  
+          <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
           <AddBoxOutlinedIcon style={{ marginRight: '5px' }} />ADD MORE
           </button>
-                  </form>
-                  
-                </div>
-              </div>
-            )}
+          </form>
+          
+        </div>
+        
+      </div>
+    )}
           </CardContent>
         </Card>
       </div>
@@ -541,14 +534,7 @@ const ThirdCardComponent = ({
     </div>
   );
 }
-const FourthCardComponent = ({
-  title,
-  description,
-  location,
-  category,
-  categoryDescription,
-  linkTo,
-}) => {
+const FourthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -588,53 +574,43 @@ const FourthCardComponent = ({
     return Object.values(results).every((value) => value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent form submission
     const isValid = validateFields();
 
     if (isValid) {
-      const internship = {
-        title: title,
-        description: description,
-        location: location,
-        category: category,
-        categoryDescription: categoryDescription,
-      };
-
-      // Make a request to add the internship object to the database
-      addInternshipToDatabase(internship);
+      console.log('Form submitted successfully!');
     } else {
       console.log('Form validation failed.');
     }
   };
 
-  const addInternshipToDatabase = async (internship) => {
-    try {
-      const response = await axios.post(
-        'https://example.com/api/internships',
-        internship
-      );
-      console.log('Internship added successfully:', response.data);
-      // Handle success, e.g., show a success message to the user
-    } catch (error) {
-      console.error('Error adding internship:', error);
-      // Handle error, e.g., show an error message to the user
+  const handleServerError = (statusCode) => {
+    if (statusCode === 404) {
+      // Handle 404 Not Found error
+      console.error('Resource not found.');
+    } else if (statusCode === 500) {
+      // Handle 500 Internal Server Error
+      console.error('Internal server error occurred.');
+    } else {
+      // Handle other error codes
+      console.error('An error occurred. Status code: ', statusCode);
     }
   };
-
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
     const [options, setOptions] = useState(['Option 1', 'Option 2']);
-  
+
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
-    }
-  
-    
+    };
+
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
       setOptions(newOptions);
-    }
+    };
+
     const handleDrop = (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
@@ -643,20 +619,19 @@ const FourthCardComponent = ({
         newOptions.push(files[i].name);
       }
       setOptions(newOptions);
-    }
-  
-    
-  
+    };
+
     const handleButtonClick = () => {
       document.getElementById('fileInput').click();
-    }
+    };
+
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
         <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
           <CardContent>
             <Typography variant="h5" component="h4">
-              Duration
+              Curated Resources
             </Typography>
             
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -679,7 +654,7 @@ const FourthCardComponent = ({
               ))}
             </div>
             <Typography variant="h5" component="h4">
-              Timeline
+            Events
             </Typography>
             
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -691,39 +666,7 @@ const FourthCardComponent = ({
               </Button>
               <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {options.map((option, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
-                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
-                    {option}
-                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <Typography variant="h5" component="h4">
-              Deliverables
-            </Typography>
             
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Button variant="outlined"
-              color="primary"
-        
-                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
-                Drag and Drop Files  <CloudUploadIcon/>
-              </Button>
-              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {options.map((option, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
-                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
-                    {option}
-                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
-                  </button>
-                </div>
-              ))}
-            </div>
             
           </CardContent>
         </Card>
@@ -761,34 +704,35 @@ const FourthCardComponent = ({
               )}
             </div>
             {isExpanded && (
-              <div style={{ display: 'flex', alignItems: 'left' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {/* First nested flexbox */}
-                  <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'37vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Curated Resources
-                    </Typography>
-                  </div>
+      <div style={{ display: 'flex', alignItems: 'left' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* First nested flexbox */}
+          <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'37vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Curated resources
+            </Typography>
+          </div>
 
-                  {/* Second nested flexbox */}
-                  <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                    <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-                      <MenuIcon /> 
-                      Events
-                    </Typography>
-                  </div>
+          {/* Second nested flexbox */}
+          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
+            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
+              <MenuIcon /> 
+              Events
+            </Typography>
+          </div>
 
-                  
-                  <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
+          
+          <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
           <AddBoxOutlinedIcon style={{ marginRight: '5px' }} />ADD MORE
           </button>
-                  </form>
-                  
-                </div>
-              </div>
-            )}
+          </form>
+          
+        </div>
+        
+      </div>
+    )}
           </CardContent>
         </Card>
       </div>
