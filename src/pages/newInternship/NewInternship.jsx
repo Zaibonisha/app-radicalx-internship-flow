@@ -71,7 +71,7 @@ const SecondCardComponent = ({ linkTo }) => {
     // Make a request to your database or API to add the internship object
     // Use the value from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://example.com/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {
@@ -264,7 +264,7 @@ const ThirdCardComponent = ({ linkTo }) => {
     // Make a request to your database or API to add the internship object
     // Use the value from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://example.com/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {
@@ -386,7 +386,7 @@ const FourthCardComponent = ({ linkTo }) => {
     // Make a request to your database or API to add the internship object
     // Use the value from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://example.com/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {
@@ -508,7 +508,7 @@ const FifthCardComponent = ({ linkTo }) => {
     // Make a request to your database or API to add the internship object
     // Use the values from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://example.com/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {

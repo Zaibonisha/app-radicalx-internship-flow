@@ -1,87 +1,99 @@
 .sidebar {
-    flex: 1;
-    height: 100vw;
-   
-    
-    background-color:beige;
-    position:sticky;
-    border-radius: 20px;
-    
-  }
-  
-  .sidebarWrapper {
-    padding: 20px;
-    
-    color: #555;
-  }
-  
-  .sidebarMenu {
-    margin-bottom: 10px;
-  }
-  
-  .sidebarTitle {
-    font-size: 13px;
-    color:lightslategrey;
-  }
-  
-  .sidebarList {
-    list-style: none;
-    padding: 5px;
-  }
-  
-  .sidebarListItem {
-    padding: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-  }
-  
-  .sidebarListItem.active,
-  .sidebarListItem:hover {
-    background-color: rgb(240, 240, 255);
-  }
-  
-  .container{
-    display: grid;
-    column-gap: 5px;
-    
-  }
+  flex: 1;
+  height: 100vh;
+  background-color: beige;
+  position: sticky;
+  top: 0;
+  border-radius: 20px;
+  z-index: 9999; 
+}
 
-  .bottom_section{
-    position: absolute;
-    bottom: 70px;
-    width: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    align-items: left;
-  }
+.sidebarWrapper {
+  padding: 20px;
+  color: #555;
+}
 
+.sidebarMenu {
+  margin-bottom: 10px;
+}
+
+.sidebarTitle {
+  font-size: 13px;
+  color: lightslategrey;
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 5px;
+}
+
+.sidebarListItem {
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.sidebarListItem.active,
+.sidebarListItem:hover {
+  background-color: rgb(240, 240, 255);
+}
+
+.container {
+  display: grid;
+  column-gap: 5px;
+}
+
+.bottom_section {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+}
+.sideAvatar {
+  width: 5vw;
+  height: 8vh;
+  border-radius: 50%;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+}
+.imageLabel {
+  font-size: 14px; /* Adjust the font size as needed */
+  color: #333; /* Adjust the label text color */
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.bottom_section {
+  
  
+  width: 100%;
+  padding-top: 70px;
+  display: flex;
+  margin-top: 35vw;
+  margin-bottom: 20vw;
+}
 
-  .sideAvatar{
-    width: 85px;
-    height: 85px;
-    border-radius: 35px;
-    padding: 20px;
-    cursor: pointer;
-    align-items: center;
-
-    
-    
-    
-  }
-
-
-  .top_section{
-    display: flex;
-    align-items:center;
-    padding:20px 15px;
-  }
-  
-  .logo{
-    width:"50" ;
-    height:"50";
-  }
-
-  

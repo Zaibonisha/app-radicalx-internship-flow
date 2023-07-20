@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 const app = express();
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: 'https://intern-dashbaord-b288d.firebaseio.com'
+  databaseURL: 'https://internship-flow-radicalx-app.web.app'
 });
 
 const db = admin.firestore();
