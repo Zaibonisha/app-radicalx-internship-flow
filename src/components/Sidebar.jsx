@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography } from '@mui/material';
 import { LineStyle, Timeline, TrendingUp, BarChart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import Title from './Title';
 import '../css/component/sidebar.css';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-
-
-
-function Sidebar() {
- 
-
-  
- 
-
+function Sidebar({ isLoggedIn, userName, onLogout }) {
   return (
     <div className="sidebar">
       <div className="top_section">
-        <img src="radicalx_logo.png" alt="Radical X logo" width="200" height="100" />
+        <img src="radicalx_logo.png" alt="Radical X logo" className="logo" />
       </div>
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
@@ -43,16 +34,19 @@ function Sidebar() {
             </li>
           </ul>
           <div className="avatarSection">
-  
-        <div className="avatarContainer">
-        <img src="side-avatar.jpg" alt="" className="sideAvatar" title="Adam Scott" />
-        <span className="imageLabel">Adam Scott</span>
+            {isLoggedIn && (
+              <div className="avatarContainer">
+                <img src="side-avatar.jpg" alt="" className="sideAvatar" title={userName} />
+                <div className="userInfo">
+                  <span className="imageLabel">{userName}</span>
+                  <button className="logoutButton" onClick={onLogout}>
+                  <LogoutIcon style={{ fontSize: '3.5vw', color: 'purple' }} />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-    </div>
-
-          
-        </div>
-       
       </div>
     </div>
   );

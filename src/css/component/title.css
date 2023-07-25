@@ -1,5 +1,14 @@
-.text{
-    font-size: 10px;
-    text-align: left;
-    
-}
+/* Add this to your CSS file */
+
+.title-container {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .logout-button {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Add other styles as needed */
+  

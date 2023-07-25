@@ -5,7 +5,6 @@ import '../css/component/login.css';
 function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -19,19 +18,13 @@ function LoginPage({ onLogin }) {
     e.preventDefault();
 
     if (username === 'nisha' && password === '12345') {
-      setIsLoggedIn(true);
-      onLogin();
+      onLogin(username);
+      setUsername('');
+      setPassword('');
     } else {
       alert('Invalid username or password!');
     }
-
-    setUsername('');
-    setPassword('');
   };
-
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div

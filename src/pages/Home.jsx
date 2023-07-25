@@ -18,6 +18,7 @@ function Home() {
     <div className="home">
       <div>
         {/* Button that links to the target page */}
+        
         <Link to="/NewInternship">
       <button onClick={handleClick} style={{
       backgroundColor:'purple', // Set the background color

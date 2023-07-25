@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect, useLocation } from 'react-route
 import Sidebar from './components/Sidebar';
 import "./App.css";
 import Home from "./pages/Home";
-import Title from "./components/Title";
+//import Title from "./components/Title";
 import NewInternship from "./pages/newInternship/NewInternship";
 import AddMore from "./pages/cardPages/AddMore";
 import AddSurvey from "./pages/cardPages/AddSurvey";
@@ -12,13 +12,16 @@ import LoginPage from './pages/LoginPage';
 
 function Main() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = (username) => {
     setIsLoggedIn(true);
+    setUserName(username);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserName('');
   };
 
   const location = useLocation();
@@ -26,7 +29,8 @@ function Main() {
 
   return (
     <>
-      <Title isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+      {/* <Title isLoggedIn={isLoggedIn} userName={userName} onLogout={handleLogout} /> */}
+
       <div className="container">
         {!hideSidebar && <Sidebar isLoggedIn={isLoggedIn} onLogout={handleLogout} />}
 
