@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route, Redirect, useLocation } from 'react-route
 import Sidebar from './components/Sidebar';
 import "./App.css";
 import Home from "./pages/Home";
-//import Title from "./components/Title";
 import NewInternship from "./pages/newInternship/NewInternship";
 import AddMore from "./pages/cardPages/AddMore";
 import AddSurvey from "./pages/cardPages/AddSurvey";
@@ -32,14 +31,14 @@ function Main() {
       {/* <Title isLoggedIn={isLoggedIn} userName={userName} onLogout={handleLogout} /> */}
 
       <div className="container">
-        {!hideSidebar && <Sidebar isLoggedIn={isLoggedIn} onLogout={handleLogout} />}
+        {!hideSidebar && <Sidebar isLoggedIn={isLoggedIn} userName={userName} onLogout={handleLogout} />}
 
         <Switch>
           <Route exact path="/login" render={() => (
             isLoggedIn ? <Redirect to="/" /> : <LoginPage onLogin={handleLogin} />
           )} />
           <Route exact path="/" render={() => (
-            isLoggedIn ? <Home/> : <Redirect to="/login" />
+            isLoggedIn ? <Home /> : <Redirect to="/login" />
           )} />
           <Route exact path="/newInternship" render={() => (
             isLoggedIn ? <NewInternship /> : <Redirect to="/login" />

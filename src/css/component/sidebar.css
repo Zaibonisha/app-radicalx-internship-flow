@@ -64,20 +64,21 @@
 }
 
 .sideAvatar {
-  width: 50px;
-  height: 50px;
+  width: 20%;
+  height: 35%;
   border-radius: 50%;
   margin-right: 10px;
 }
 
 .userInfo {
   display: flex;
-  align-items: center;
+  align-items: right;
 }
 
-.imageLabel {
+.sideAvatarText {
   font-size: 14px; /* Adjust the font size as needed */
-  color: #333; /* Adjust the label text color */
+  color: #333;
+  position:right; /* Adjust the label text color */
 }
 
 .logoutButton {
@@ -101,3 +102,22 @@
   width: 20vw;
   height: 10vh;
 }
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50%;
+}
+.avatarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.logoutButtonText {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10%; 
+}
+
+
+

@@ -33,19 +33,20 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
               <h2>Reports</h2>
             </li>
           </ul>
-          <div className="avatarSection">
-            {isLoggedIn && (
+          {isLoggedIn && (
+            <div className="avatarSection">
               <div className="avatarContainer">
-                <img src="side-avatar.jpg" alt="" className="sideAvatar" title={userName} />
+                <img src="imageavatar.jpg" alt="Side Avatar" className="sideAvatar" />
                 <div className="userInfo">
-                  <span className="imageLabel">{userName}</span>
-                  <button className="logoutButton" onClick={onLogout}>
-                  <LogoutIcon style={{ fontSize: '3.5vw', color: 'purple' }} />
-                  </button>
+                  <span className="sideAvatarText">{userName}</span>
                 </div>
+                <button className="logoutButton" onClick={onLogout} >
+                <LogoutIcon style={{ fontSize: '2vw', color: '#8338ec', verticalAlign: 'middle', marginRight: '5px' }} />
+                <span className="logoutButtonText">Logout</span>
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
