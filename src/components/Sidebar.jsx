@@ -34,18 +34,21 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
             </li>
           </ul>
           {isLoggedIn && (
-            <div className="avatarSection">
-              <div className="avatarContainer">
-                <img src="imageavatar.jpg" alt="Side Avatar" className="sideAvatar" />
-                <div className="userInfo">
-                  <span className="sideAvatarText">{userName}</span>
-                </div>
-                <button className="logoutButton" onClick={onLogout} >
-                <LogoutIcon style={{ fontSize: '2vw', color: '#8338ec', verticalAlign: 'middle', marginRight: '5px' }} />
-                <span className="logoutButtonText">Logout</span>
-                </button>
-              </div>
-            </div>
+           <div className="avatarSection">
+           <div className="avatarContainer">
+           <a href="/profile" style={{ textDecoration: 'none' }}>
+            <img src="imageavatar.jpg" alt="Side Avatar" className="sideAvatar" />
+            <span className="sideAvatarText" >{userName} </span>
+           </a>
+               
+             
+             <button className="logoutButton" onClick={onLogout}>
+               <LogoutIcon style={{ fontSize: '3vw', color: '#8338ec', verticalAlign: 'middle', marginTop: '40%' }} />
+               <span className="logoutButtonText">Logout</span>
+             </button>
+           </div>
+         </div>
+          
           )}
         </div>
       </div>
