@@ -179,7 +179,7 @@ const SecondCardComponent = ({ linkTo }) => {
       className="card-wrapper"
       style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}
     >
-      <div style={{ display: 'flex', alignItems: 'top-left' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <MenuIcon />
       </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
@@ -196,8 +196,8 @@ const SecondCardComponent = ({ linkTo }) => {
             style={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton edge="start" color="black" aria-label="menu" />
-              <Typography variant="h7" component="h6">
+              <IconButton edge="start" color="inherit" aria-label="menu" />
+              <Typography variant="h6" component="h6">
                 Category
               </Typography>
               {isChecked && (
@@ -205,7 +205,7 @@ const SecondCardComponent = ({ linkTo }) => {
               )}
             </div>
             <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
-              <IconButton edge="start" color="black" aria-label="back">
+              <IconButton edge="start" color="inherit" aria-label="back">
                 <ArrowRightIcon />
               </IconButton>
             </Link>
