@@ -26,17 +26,16 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 // Define CardComponent function component separately
 
-const SecondCardComponent = ({ linkTo }) => {
+const Category = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [options, setOptions] = useState(['Option 1', 'Option 2']);
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
     setIsChecked(true);
-    setIsFieldOpen((prevState) => !prevState);
+    setIsFieldOpen(prevState => !prevState);
     addInternshipToDatabase();
   };
 
@@ -57,155 +56,83 @@ const SecondCardComponent = ({ linkTo }) => {
     return value.length > 0;
   };
 
-  const handleDeleteOption = (index) => {
-    const newOptions = [...options];
-    newOptions.splice(index, 1);
-    setOptions(newOptions);
-  };
-
   const addInternshipToDatabase = () => {
     if (!isValid) {
       return;
     }
+  
 
     // Make a request to your database or API to add the internship object
     // Use the value from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/NewInternship', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
+      .then(response => {
         // Handle the response
         if (response.ok) {
           console.log('Internship added to the database successfully');
         } else {
-          // Throw an error with the status code and status text
-          throw new Error(
-            `HTTP Error ${response.status}: ${response.statusText}`
-          );
+          throw new Error('Failed to add the internship to the database');
         }
       })
-      .catch((error) => {
-        // Display the error message based on the HTTP status code
-        let errorMessage;
-        if (error.message.startsWith('HTTP Error')) {
-          // Extract the status code and status text from the error message
-          const [statusCode, statusText] = error.message.split(':');
-          errorMessage = `HTTP Error ${statusCode.trim()}: ${statusText.trim()}`;
-        } else {
-          errorMessage = 'An error occurred while adding the internship.';
-        }
-        console.error(errorMessage);
-
-        // Update the state with the error message
-        setErrorMessage(errorMessage);
+      .catch(error => {
+        console.error(error);
       });
   };
 
   const OptionsPanel = () => (
     <div style={{ position: 'relative', minWidth: '200px' }}>
-      <Card
-        style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}
-      >
+      <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
         <CardContent>
           <Typography variant="h5" component="h4">
             Category
           </Typography>
-          <div
-            style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
             <SearchIcon style={{ marginRight: '10px' }} />
             <input
               type="text"
               value={searchText}
               onChange={handleSearchChange}
               placeholder="Search..."
-              style={{
-                flexGrow: '1',
-                border: 'none',
-                borderBottom: '1px solid #ccc',
-                padding: '5px',
-              }}
+              style={{ flexGrow: '1', border: 'none', borderBottom: '1px solid #ccc', padding: '5px' }}
             />
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {options.map((option, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginRight: '10px',
-                  marginBottom: '10px',
-                }}
-              >
-                <button
-                  style={{
-                    width: '10vw',
-                    backgroundColor: '#f1f1f1',
-                    border: 'none',
-                    padding: '10px',
-                    borderRadius: '5px',
-                    position: 'relative',
-                    color: 'purple',
-                  }}
-                >
-                  {option}
-                  <ClearIcon
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      cursor: 'pointer',
-                      width: '20px',
-                    }}
-                    onClick={() => handleDeleteOption(index)}
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
+          {isValid ? (
+            <Typography variant="body2" style={{ color: 'green' }}>
+              Field is valid.
+            </Typography>
+          ) : (
+            <Typography variant="body2" style={{ color: 'red' }}>
+              {errorMessage}
+            </Typography>
+          )}
         </CardContent>
       </Card>
     </div>
   );
 
   return (
-    <div
-      className="card-wrapper"
-      style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'top-left' }}>
         <MenuIcon />
       </div>
       <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card
-          style={{
-            height: '75px',
-            width: '43vw',
-            cursor: 'pointer',
-            margin: '10px',
-            borderRadius: '10px',
-          }}
-        >
-          <CardContent
-            style={{ display: 'flex', justifyContent: 'space-between' }}
-          >
+        <Card style={{ height: '75px', width: '43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }}>
+          <CardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton edge="start" color="inherit" aria-label="menu" />
-              <Typography variant="h6" component="h6">
+              <IconButton edge="start" color="black" aria-label="menu"></IconButton>
+              <Typography variant="h7" component="h6">
                 Category
               </Typography>
-              {isChecked && (
-                <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
-              )}
+              {isChecked && <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />}
             </div>
             <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
-              <IconButton edge="start" color="inherit" aria-label="back">
+              <IconButton edge="start" color="black" aria-label="back">
                 <ArrowRightIcon />
               </IconButton>
             </Link>
@@ -215,18 +142,13 @@ const SecondCardComponent = ({ linkTo }) => {
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
           <OptionsPanel />
-          {isValid ? (
-            <p style={{ color: 'green' }}>Search field is valid.</p>
-          ) : (
-            <p style={{ color: 'red' }}>{errorMessage}</p>
-          )}
         </div>
       )}
     </div>
   );
 };
 
-const ThirdCardComponent = ({ linkTo }) => {
+const Description = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -348,7 +270,7 @@ const ThirdCardComponent = ({ linkTo }) => {
 };
 
 
-const FourthCardComponent = ({ linkTo }) => {
+const Location = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -470,7 +392,7 @@ const FourthCardComponent = ({ linkTo }) => {
   );
 };
 
-const FifthCardComponent = ({ linkTo }) => {
+const Benefits = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -591,7 +513,7 @@ const FifthCardComponent = ({ linkTo }) => {
   );
 };
 
-const SixthCardComponent = ({
+const IntroVideos = ({
   title,
   description,
   location,
@@ -808,7 +730,7 @@ const SixthCardComponent = ({
   );
 };
 
-const SeventhCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const MentorDetails = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [name, setName] = useState('');
@@ -990,7 +912,7 @@ const SeventhCardComponent = ({ title, description, location, category, category
     </div>
   );
 };
-const EighthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const Roles = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -1159,7 +1081,7 @@ const EighthCardComponent = ({ title, description, location, category, categoryD
 };
   
 
-const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
+const WebLinks = ({ linkTo, onWebLinksClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -1167,7 +1089,7 @@ const NinethCardComponent = ({ linkTo, onNinethCardComponentClick }) => {
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen((prevState) => !prevState);
-    onNinethCardComponentClick();
+    onWebLinksClick();
   };
 
   const AddUrlPanel = () => {
@@ -1298,7 +1220,7 @@ const AddMoreButton = ({ onAddCard }) => {
   );
 };
 
-function TopCardComponent({ isNinethCardComponentClicked }) {
+function TopCardComponent({ isWebLinksClicked }) {
   return (
     <Card style={{ height: '75px', width: '85vw', position: 'relative' }}>
       <CardContent style={{ textAlign: 'center' }}>
@@ -1327,7 +1249,7 @@ function TopCardComponent({ isNinethCardComponentClicked }) {
             position: 'absolute',
             top: 0,
             right: 0,
-            backgroundColor: isNinethCardComponentClicked ? 'purple' : 'grey',
+            backgroundColor: isWebLinksClicked ? 'purple' : 'grey',
           }}
         >
           Continue to Next Step
@@ -1340,7 +1262,7 @@ function TopCardComponent({ isNinethCardComponentClicked }) {
 }
 
 
-function StatusBar({ isNinethCardComponentClicked }) {
+function StatusBar({ isWebLinksClicked }) {
   const [isLinkClicked, setIsLinkClicked] = useState(false);
 
   const handleLinkClick = () => {
@@ -1352,7 +1274,7 @@ function StatusBar({ isNinethCardComponentClicked }) {
     <Card style={{ height: '75px', width: '85vw', backgroundColor: '#f0f0f0', position: 'relative' }}>
       <CardContent style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-        {isNinethCardComponentClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
+        {isWebLinksClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
           <Typography style={{ textAlign: 'left', color: 'black' }} variant="body1" component="p">
             Internship Description
           </Typography>
@@ -1383,24 +1305,24 @@ function StatusBar({ isNinethCardComponentClicked }) {
 
 function NewInternship() {
   // Rest of the code
-  const [isNinethCardComponentClicked, setIsNinethCardComponentClicked] = useState(false);
+  const [isWebLinksClicked, setIsWebLinksClicked] = useState(false);
 
-  const handleNinethCardComponentClick = () => {
-    setIsNinethCardComponentClicked(true);
+  const handleWebLinksClick = () => {
+    setIsWebLinksClicked(true);
   };
   return (
     // JSX content using TopCardComponent and CardComponent
     <div>
-      <TopCardComponent isNinethCardComponentClicked={isNinethCardComponentClicked} />
-      <StatusBar isNinethCardComponentClicked={isNinethCardComponentClicked} />
-      <SecondCardComponent/>
-      <ThirdCardComponent/>
-      <FourthCardComponent/>
-      <FifthCardComponent/>
-      <SixthCardComponent/>
-      <SeventhCardComponent/>
-      <EighthCardComponent/>
-      <NinethCardComponent onNinethCardComponentClick={handleNinethCardComponentClick}/>
+      <TopCardComponent isWebLinksClicked={isWebLinksClicked} />
+      <StatusBar isWebLinksClicked={isWebLinksClicked} />
+      <Category/>
+      <Description/>
+      <Location/>
+      <Benefits/>
+      <IntroVideos/>
+      <MentorDetails/>
+      <Roles/>
+      <WebLinks onWebLinksClick={handleWebLinksClick}/>
       <AddMoreButton />
       
     </div>
