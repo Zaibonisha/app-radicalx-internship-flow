@@ -1242,19 +1242,19 @@ function TopCardComponent({ isWebLinksClicked }) {
           Add New Internship
         </Typography>
         <Link to="/AddMore">
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            backgroundColor: isWebLinksClicked ? 'purple' : 'grey',
-          }}
-        >
-          Continue to Next Step
-          <ArrowForwardIosIcon style={{ marginLeft: '5px' }} />
-        </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              backgroundColor: isWebLinksClicked ? 'purple' : 'grey',
+            }}
+          >
+            Continue to Next Step
+            <ArrowForwardIosIcon style={{ marginLeft: '5px' }} />
+          </Button>
         </Link>
       </CardContent>
     </Card>
@@ -1282,19 +1282,19 @@ function StatusBar({ isWebLinksClicked }) {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
           <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
-            Additional Details
+            Internship Guide 
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
           <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
-            Review & Submit
+            Surveys
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <DataUsageIcon style={{ color: 'lightgray', marginRight: '5px' }} />
           <Typography style={{ textAlign: 'right', color: 'lightgray' }} variant="body1" component="p">
-            Review & Submit
+            Settings
           </Typography>
         </div>
       </CardContent>
