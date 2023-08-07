@@ -32,7 +32,7 @@ import axios from 'axios';
 
 // Define CardComponent function component separately
 
-const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const BasicSettings = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [validationResult, setValidationResult] = useState({ success: false, message: '' });
@@ -205,14 +205,14 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 };
-const ThirdCardComponent = ({
+const HeroImage = ({
   title,
   description,
   location,
   category,
   categoryDescription,
   linkTo,
-  onThirdCardComponentClick
+  onHeroImageClick
 }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [titleError, setTitleError] = useState('');
@@ -220,7 +220,7 @@ const ThirdCardComponent = ({
 
   const handleLinkClick = () => {
     setIsFieldOpen(!isFieldOpen);
-    onThirdCardComponentClick();
+    onHeroImageClick();
   };
 
   const OptionsPanel = () => {
@@ -372,7 +372,7 @@ const ThirdCardComponent = ({
   
   
   
-  function TopCardComponent({ isThirdCardComponentClicked }) {
+  function TopCardComponent({ isHeroImageClicked }) {
     const [ setIsButtonLabelChanged] = useState(false);
   
     const handleButtonClick = () => {
@@ -402,7 +402,7 @@ const ThirdCardComponent = ({
             style={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'purple' }}
             onClick={handleButtonClick}
           >
-            {isThirdCardComponentClicked ? 'Publish Internship' : 'Continue to next step'}
+            {isHeroImageClicked ? 'Publish Internship' : 'Continue to next step'}
             <ArrowForwardIosIcon style={{ marginLeft: '5px' }} />
           </Button>
         </CardContent>
@@ -412,7 +412,7 @@ const ThirdCardComponent = ({
   
   
   
-  function StatusBar({ isThirdCardComponentClicked }) {
+  function StatusBar({ isHeroImageClicked }) {
     const [ setIsLinkClicked] = useState(false);
   
     const handleLinkClick = () => {
@@ -442,7 +442,7 @@ const ThirdCardComponent = ({
             </Typography>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-          {isThirdCardComponentClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
+          {isHeroImageClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
             <Typography style={{ textAlign: 'right', color: 'black' }} variant="body1" component="p">
                Settings
             </Typography>
@@ -453,21 +453,21 @@ const ThirdCardComponent = ({
   }
   
   function Settings() {
-    const [isThirdCardComponentClicked, setIsThirdCardComponentClicked] = useState(false);
+    const [isHeroImageClicked, setIsHeroImageClicked] = useState(false);
     
       // Add any additional logic here
     
-  const handleThirdCardComponentClick = () => {
-    setIsThirdCardComponentClicked(true);
+  const handleHeroImageClick = () => {
+    setIsHeroImageClicked(true);
   };
     
     return (
       // JSX content using TopCardComponent and CardComponent
       <div>
-        <TopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked} />
-        <StatusBar isThirdCardComponentClicked={isThirdCardComponentClicked}/>
-        <SecondCardComponent/>
-        <ThirdCardComponent onThirdCardComponentClick={handleThirdCardComponentClick}/>
+        <TopCardComponent isHeroImageClicked={isHeroImageClicked} />
+        <StatusBar isHeroImageClicked={isHeroImageClicked}/>
+        <BasicSettings/>
+        <HeroImage onHeroImageClick={handleHeroImageClick}/>
         
         
         

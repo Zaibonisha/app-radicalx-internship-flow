@@ -24,11 +24,12 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Collapse from '@mui/material/Collapse';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import axios from 'axios';
+import { Schedule } from '@mui/icons-material';
 //import SecondCardComponent from '../components/SecondCardComponent';
 
 // Define CardComponent function component separately
 
-const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const Overview = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -281,7 +282,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
     </div>
   );
 }
-const ThirdCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const ScheduleField = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -534,7 +535,7 @@ const ThirdCardComponent = ({ title, description, location, category, categoryDe
     </div>
   );
 }
-const FourthCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const Resources = ({ title,linkTo, description, location, category, categoryDescription, onResourcesClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -545,6 +546,7 @@ const FourthCardComponent = ({ title, description, location, category, categoryD
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen((prevState) => !prevState);
+    onResourcesClick(); // Call the prop function to update the state in the parent component
   };
 
   const handleExpandClick = () => {
@@ -789,7 +791,7 @@ const AddMoreButton = ({ onAddCard }) => {
 
 
 
-function TopCardComponent({ isFourthCardComponentClicked }) {
+function TopCardComponent({ isResourcesClicked }) {
   return (
     <Card style={{ height: '75px', width: '85vw', position: 'relative' }}>
       <CardContent style={{ textAlign: 'center' }}>
@@ -818,7 +820,7 @@ function TopCardComponent({ isFourthCardComponentClicked }) {
             position: 'absolute',
             top: 0,
             right: 0,
-            backgroundColor: isFourthCardComponentClicked ? 'purple' : 'grey',
+            backgroundColor: isResourcesClicked ? 'purple' : 'grey',
           }}
         >
           Continue to Next Step
@@ -830,7 +832,7 @@ function TopCardComponent({ isFourthCardComponentClicked }) {
   );
 }
 
-function StatusBar({ isFourthCardComponentClicked }) {
+function StatusBar({ isResourcesClicked }) {
   const [isLinkClicked, setIsLinkClicked] = useState(false);
 
   const handleLinkClick = () => {
@@ -848,7 +850,7 @@ function StatusBar({ isFourthCardComponentClicked }) {
           </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-        {isFourthCardComponentClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
+        {isResourcesClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
           <Typography style={{ textAlign: 'right', color: 'black' }} variant="body1" component="p">
             Internship Guide
           </Typography>
@@ -873,10 +875,10 @@ function StatusBar({ isFourthCardComponentClicked }) {
 
 function AddMore() {
   // Rest of the code
-  const [isFourthCardComponentClicked, setIsFourthCardComponentClicked] = useState(false);
+  const [isResourcesClicked, setIsResourcesClicked] = useState(false);
 
-  const handleFourthCardComponentClick = () => {
-    setIsFourthCardComponentClicked(true);
+  const handleResourcesClick = () => {
+    setIsResourcesClicked(true);
   };
   const handleSubmit = () => {
     // Handle form submission logic here
@@ -886,11 +888,11 @@ function AddMore() {
   return (
     // JSX content using TopCardComponent and CardComponent
     <div>
-      <TopCardComponent isFourthCardComponentClicked={isFourthCardComponentClicked} />
-      <StatusBar isFourthCardComponentClicked={isFourthCardComponentClicked} />
-      <SecondCardComponent onSubmit={handleSubmit}/>
-      <ThirdCardComponent/>
-      <FourthCardComponent onFourthCardComponentClick={handleFourthCardComponentClick} />
+      <TopCardComponent isResourcesClicked={isResourcesClicked} />
+      <StatusBar isResourcesClicked={isResourcesClicked} />
+      <Overview onSubmit={handleSubmit}/>
+      <ScheduleField/>
+      <Resources onResourcesClick={handleResourcesClick} />
       <AddChapterButton/>
       
       

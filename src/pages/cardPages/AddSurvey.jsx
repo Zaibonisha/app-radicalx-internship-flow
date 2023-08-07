@@ -31,7 +31,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 // Define CardComponent function component separately
 
 
-const SecondCardComponent = ({ title, description, location, category, categoryDescription, linkTo }) => {
+const SurveyOne = ({ title, description, location, category, categoryDescription, linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -192,7 +192,7 @@ const SecondCardComponent = ({ title, description, location, category, categoryD
   );
 };
 
-const ThirdCardComponent= ({ title, description, location, category, categoryDescription, linkTo }) => {
+const SurveyTwo= ({ title, description, location, category, categoryDescription, linkTo, onSurveyTwoClick }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -203,6 +203,7 @@ const ThirdCardComponent= ({ title, description, location, category, categoryDes
   const handleLinkClick = () => {
     setIsChecked(true);
     setIsFieldOpen(prevState => !prevState);
+    onSurveyTwoClick();
   };
 
   const handleAddQuestion = () => {
@@ -433,7 +434,7 @@ const AddSettingsButton = ({ onAddCard }) => {
     );
   }
   
-  function StatusBar({ isThirdCardComponentClicked }) {
+  function StatusBar({ isSurveyTwoClicked }) {
     const [isLinkClicked, setIsLinkClicked] = useState(false);
   
     const handleLinkClick = () => {
@@ -457,7 +458,7 @@ const AddSettingsButton = ({ onAddCard }) => {
             </Typography>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-          {isThirdCardComponentClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
+          {isSurveyTwoClicked ? <CheckCircleOutlineIcon style={{ color: 'purple', marginRight: '5px' }} /> : <DataUsageIcon style={{ color: 'gray', marginRight: '5px' }} />}
             <Typography style={{ textAlign: 'right', color: 'dgray' }} variant="body1" component="p">
               Surveys
             </Typography>
@@ -474,19 +475,19 @@ const AddSettingsButton = ({ onAddCard }) => {
   }
   function AddSurvey() {
     // Rest of the code
-    const [isThirdCardComponentClicked, setIsThirdCardComponentClicked] = useState(false);
+    const [isSurveyTwoClicked, setIsSurveyTwoClicked] = useState(false);
 
-  const handleThirdCardComponentClick = () => {
-    setIsThirdCardComponentClicked(true);
+  const handleSurveyTwoClick = () => {
+    setIsSurveyTwoClicked(true);
   };
     
     return (
       // JSX content using TopCardComponent and CardComponent
       <div>
-        <TopCardComponent isThirdCardComponentClicked={isThirdCardComponentClicked}/>
-        <StatusBar isThirdCardComponentClicked={isThirdCardComponentClicked}/>
-        <SecondCardComponent/>
-        <ThirdCardComponent onThirdCardComponentClick={handleThirdCardComponentClick}/>
+        <TopCardComponent isSurveyTwoClicked={isSurveyTwoClicked}/>
+        <StatusBar isSurveyTwoClicked={isSurveyTwoClicked}/>
+        <SurveyOne/>
+        <SurveyTwo onSurveyTwoClick={handleSurveyTwoClick}/>
         <AddSettingsButton/>
         
         
