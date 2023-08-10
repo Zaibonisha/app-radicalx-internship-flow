@@ -132,10 +132,11 @@ const Category = ({ linkTo }) => {
               {isChecked && <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />}
             </div>
             <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
-              <IconButton edge="start" color="black" aria-label="back">
-                <ArrowRightIcon />
-              </IconButton>
+             <IconButton edge="start" color="black" aria-label="back">
+             <ArrowRightIcon />
+             </IconButton>
             </Link>
+
           </CardContent>
         </Card>
       </div>

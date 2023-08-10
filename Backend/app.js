@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.post('/', (req, res) => {
   const payload = req.body;
+  console.log('Received payload:', payload); // Add this line for logging
   
   // Save the payload to Firebase
   const collectionRef = db.collection('payloads');
@@ -21,10 +22,7 @@ app.post('/', (req, res) => {
       res.send('Payload saved successfully');
     })
     .catch((error) => {
+      console.error('Error saving payload:', error); // Add this line for logging
       res.status(500).send('Error saving payload');
     });
-});
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
 });
