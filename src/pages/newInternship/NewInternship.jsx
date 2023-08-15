@@ -566,7 +566,7 @@ const IntroVideos = ({
         categoryDescription,
         options,
       };
-      axios.post('/api/internships', internship)
+      axios.post('https://internship-flow-radicalx-app.web.app/api/NewInternship', internship)
         .then(response => {
           // Handle success response
           setValidationMessage('Success! Field is valid.');
@@ -584,7 +584,7 @@ const IntroVideos = ({
               setValidationMessage('An error occurred. Please try again later.');
             }
           } else {
-            setValidationMessage('Network error. Please check your internet connection.');
+            setValidationMessage('An error occurred.');
           }
           console.error('Error adding internship:', error);
         });
@@ -595,7 +595,7 @@ const IntroVideos = ({
     <div style={{ position: 'relative', minWidth: '200px' }}>
       <Card
         style={{
-          height: '10vw',
+          height: '20vw',
           width: '40vw',
           margin: '10px',
           borderRadius: '10px',
@@ -806,7 +806,7 @@ const MentorDetails = ({ title, description, location, category, categoryDescrip
     };
 
     // Send the internship object to the backend API
-    axios.post('/api/internships', internship)
+    axios.post('https://internship-flow-radicalx-app.web.app/api/NewInternship', internship)
       .then(response => {
         // Handle successful response from the backend
         console.log('Internship added to the database:', response.data);
@@ -935,7 +935,7 @@ const Roles = ({ title, description, location, category, categoryDescription, li
       };
 
       // Make a request to the backend API or database to save the internship object
-      axios.post('/api/internships', internship)
+      axios.post('https://internship-flow-radicalx-app.web.app/api/NewInternship', internship)
         .then(response => {
           // Handle the response if needed
           console.log('Internship object saved successfully:', response.data);
@@ -1109,7 +1109,7 @@ const WebLinks = ({ linkTo, onWebLinksClick }) => {
 
       // Make a request to the backend API or database to add the URL
       axios
-        .post('/api/add-url', { url })
+        .post('https://internship-flow-radicalx-app.web.app/api/NewInternship', { url })
         .then((response) => {
           // Handle success
           console.log('URL added successfully');
