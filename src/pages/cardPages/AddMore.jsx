@@ -587,16 +587,38 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
     }
   };
 
+  const handleAPIRequest = () => {
+    fetch('https://api.example.com/resource')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status.toString());
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Process data
+      })
+      .catch(error => {
+        handleServerError(error.message);
+      });
+  };
+
   const handleServerError = (statusCode) => {
-    if (statusCode === 404) {
-      // Handle 404 Not Found error
-      console.error('Resource not found.');
-    } else if (statusCode === 500) {
-      // Handle 500 Internal Server Error
-      console.error('Internal server error occurred.');
+    if (statusCode === '404') {
+      setErrorMessages(prevState => ({
+        ...prevState,
+        general: 'Resource not found.'
+      }));
+    } else if (statusCode === '500') {
+      setErrorMessages(prevState => ({
+        ...prevState,
+        general: 'Internal server error occurred.'
+      }));
     } else {
-      // Handle other error codes
-      console.error('An error occurred. Status code: ', statusCode);
+      setErrorMessages(prevState => ({
+        ...prevState,
+        general: `An error occurred. Status code: ${statusCode}`
+      }));
     }
   };
   const OptionsPanel = () => {

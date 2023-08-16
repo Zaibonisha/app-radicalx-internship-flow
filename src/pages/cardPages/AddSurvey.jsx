@@ -151,7 +151,7 @@ const SurveyOne = ({ title, description, location, category, categoryDescription
       </div>
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+          <Card style={{ height: '40vh', width: '40vw', margin: '10px', borderRadius: '10px' }}>
             <CardContent>
               <Typography variant="h5" component="h4">
                 Add Questions
@@ -178,12 +178,7 @@ const SurveyOne = ({ title, description, location, category, categoryDescription
               >
                 Validate Fields
               </button>
-              <button
-                style={{ width: '10vw', backgroundColor: 'red', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
-                onClick={() => handleRequestError(500)} // Example error code, you can change it based on your requirements
-              >
-                Simulate Error
-              </button>
+              
             </CardContent>
           </Card>
         </div>
@@ -313,7 +308,7 @@ const SurveyTwo= ({ title, description, location, category, categoryDescription,
       </div>
       {isFieldOpen && (
         <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+          <Card style={{ height: '40vh', width: '40vw', margin: '10px', borderRadius: '10px' }}>
             <CardContent>
               <Typography variant="h5" component="h4">
                 Add Questions
@@ -340,12 +335,7 @@ const SurveyTwo= ({ title, description, location, category, categoryDescription,
               >
                 Validate Fields
               </button>
-              <button
-                style={{ width: '10vw', backgroundColor: 'red', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'white', marginTop: '10px' }}
-                onClick={() => handleRequestError(500)} // Example error code, you can change it based on your requirements
-              >
-                Simulate Error
-              </button>
+             
             </CardContent>
           </Card>
         </div>
