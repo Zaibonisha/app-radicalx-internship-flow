@@ -624,17 +624,18 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
     const [options, setOptions] = useState(['Option 1', 'Option 2']);
-
+    const [validationStatus, setValidationStatus] = useState(false);
+  
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
     };
-
+  
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
       setOptions(newOptions);
     };
-
+  
     const handleDrop = (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
@@ -644,11 +645,23 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
       }
       setOptions(newOptions);
     };
-
+  
     const handleButtonClick = () => {
       document.getElementById('fileInput').click();
     };
-
+  
+    const validateFields = () => {
+      // Perform your validation logic here
+      // Return true if all fields are valid, otherwise return false
+      // For demonstration purposes, assuming a simple validation
+      return options.length > 0;
+    };
+  
+    const handleValidationClick = () => {
+      const isValid = validateFields();
+      setValidationStatus(isValid);
+    };
+  
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
@@ -689,8 +702,20 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
                 Drag and Drop Files  <CloudUploadIcon/>
               </Button>
               <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
+             
             </div>
-            
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <button
+                type="button"
+                onClick={handleValidationClick}
+                style={{ backgroundColor: 'blue', borderRadius: '5px', color: 'white', height:'5vh', width: '10vw', marginBottom: '10px' }}
+              >
+                VALIDATE FIELDS
+              </button>
+            </div>
+            {validationStatus && (
+              <div style={{ color: 'red', marginBottom: '10px' }}>Validation {validationStatus ? 'successful' : 'failed'}.</div>
+            )}
             
           </CardContent>
         </Card>
