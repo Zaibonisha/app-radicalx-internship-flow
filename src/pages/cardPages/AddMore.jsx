@@ -625,6 +625,7 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
     const [searchText, setSearchText] = useState('');
     const [options, setOptions] = useState(['Option 1', 'Option 2']);
     const [validationStatus, setValidationStatus] = useState(false);
+    const [filesDropped, setFilesDropped] = useState(false);
   
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
@@ -644,6 +645,7 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
         newOptions.push(files[i].name);
       }
       setOptions(newOptions);
+      setFilesDropped(true);
     };
   
     const handleButtonClick = () => {
@@ -651,17 +653,13 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
     };
   
     const validateFields = () => {
-      // Perform your validation logic here
-      // Return true if all fields are valid, otherwise return false
-      // For demonstration purposes, assuming a simple validation
-      return options.length > 0;
+      return options.length > 0 && filesDropped;
     };
   
     const handleValidationClick = () => {
       const isValid = validateFields();
       setValidationStatus(isValid);
     };
-  
   
     return (
       <div style={{ position: 'relative', minWidth: '200px' }}>
@@ -670,60 +668,97 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
             <Typography variant="h5" component="h4">
               Curated Resources
             </Typography>
-            
+  
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Button variant="outlined"
-              color="primary"
-        
-                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
-                Drag and Drop Files  <CloudUploadIcon/>
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }}
+                onClick={handleButtonClick}
+              >
+                Drag and Drop Files <CloudUploadIcon />
               </Button>
-              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
+              <input
+                id="fileInput"
+                type="file"
+                style={{ display: 'none' }}
+                multiple
+                onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })}
+              />
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {options.map((option, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}>
-                  <button style={{ width:'10vw', backgroundColor: '#f1f1f1', border: 'none', padding: '10px', borderRadius: '5px', position: 'relative', color: 'purple' }}>
+                <div
+                  key={index}
+                  style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}
+                >
+                  <button
+                    style={{
+                      width: '10vw',
+                      backgroundColor: '#f1f1f1',
+                      border: 'none',
+                      padding: '10px',
+                      borderRadius: '5px',
+                      position: 'relative',
+                      color: 'purple',
+                    }}
+                  >
                     {option}
-                    <ClearIcon style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }} onClick={() => handleDeleteOption(index)} />
+                    <ClearIcon
+                      style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }}
+                      onClick={() => handleDeleteOption(index)}
+                    />
                   </button>
                 </div>
               ))}
             </div>
             <Typography variant="h5" component="h4">
-            Events
+              Events
             </Typography>
-            
+  
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Button variant="outlined"
-              color="primary"
-        
-                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }} onClick={handleButtonClick}>
-                Drag and Drop Files  <CloudUploadIcon/>
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }}
+                onClick={handleButtonClick}
+              >
+                Drag and Drop Files <CloudUploadIcon />
               </Button>
-              <input id="fileInput" type="file" style={{ display: 'none' }} multiple onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })} />
-             
+              <input
+                id="fileInput"
+                type="file"
+                style={{ display: 'none' }}
+                multiple
+                onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })}
+              />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <button
                 type="button"
                 onClick={handleValidationClick}
-                style={{ backgroundColor: 'blue', borderRadius: '5px', color: 'white', height:'5vh', width: '10vw', marginBottom: '10px' }}
+                style={{
+                  backgroundColor: '#0077b6',
+                  borderRadius: '5px',
+                  color: 'white',
+                  height: '5vh',
+                  width: '10vw',
+                  marginBottom: '10px',
+                }}
               >
                 VALIDATE FIELDS
               </button>
             </div>
             {validationStatus && (
-              <div style={{ color: 'red', marginBottom: '10px' }}>Validation {validationStatus ? 'successful' : 'failed'}.</div>
+              <div style={{ color: 'red', marginBottom: '10px' }}>
+                Validation {validationStatus ? 'successful' : 'failed'}.
+              </div>
             )}
-            
           </CardContent>
         </Card>
-      
       </div>
-      
     );
-  }
+  };
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
