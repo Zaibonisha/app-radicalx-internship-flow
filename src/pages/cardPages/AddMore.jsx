@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, setOptions  } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,7 +17,6 @@ import TextField from '@mui/material/TextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useDropzone } from 'react-dropzone';
-import { useState } from 'react';
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -535,13 +534,24 @@ const ScheduleField = ({ title, description, location, category, categoryDescrip
     </div>
   );
 }
-const Resources = ({ title,linkTo, description, location, category, categoryDescription, onResourcesClick }) => {
+const Resources = ({
+  title,
+  linkTo,
+  description,
+  location,
+  category,
+  categoryDescription,
+  onResourcesClick,
+}) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [validationResults, setValidationResults] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
+  const [options, setOptions] = useState(["Option 1", "Option 2"]);
+  const [validationStatus, setValidationStatus] = useState(false);
+  const [filesDropped, setFilesDropped] = useState(false);
 
   const handleLinkClick = () => {
     setIsChecked(true);
@@ -563,7 +573,7 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
 
     if (!title) {
       results.title = false;
-      errors.title = 'Title is required.';
+      errors.title = "Title is required.";
     } else {
       results.title = true;
     }
@@ -581,258 +591,339 @@ const Resources = ({ title,linkTo, description, location, category, categoryDesc
     const isValid = validateFields();
 
     if (isValid) {
-      console.log('Form submitted successfully!');
+      console.log("Form submitted successfully!");
     } else {
-      console.log('Form validation failed.');
+      console.log("Form validation failed.");
     }
   };
 
   const handleAPIRequest = () => {
-    fetch('https://api.example.com/resource')
-      .then(response => {
+    fetch("https://api.example.com/resource")
+      .then((response) => {
         if (!response.ok) {
           throw new Error(response.status.toString());
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // Process data
       })
-      .catch(error => {
+      .catch((error) => {
         handleServerError(error.message);
       });
   };
 
   const handleServerError = (statusCode) => {
-    if (statusCode === '404') {
-      setErrorMessages(prevState => ({
+    if (statusCode === "404") {
+      setErrorMessages((prevState) => ({
         ...prevState,
-        general: 'Resource not found.'
+        general: "Resource not found.",
       }));
-    } else if (statusCode === '500') {
-      setErrorMessages(prevState => ({
+    } else if (statusCode === "500") {
+      setErrorMessages((prevState) => ({
         ...prevState,
-        general: 'Internal server error occurred.'
+        general: "Internal server error occurred.",
       }));
     } else {
-      setErrorMessages(prevState => ({
+      setErrorMessages((prevState) => ({
         ...prevState,
-        general: `An error occurred. Status code: ${statusCode}`
+        general: `An error occurred. Status code: ${statusCode}`,
       }));
     }
   };
-  const OptionsPanel = () => {
-    const [searchText, setSearchText] = useState('');
-    const [options, setOptions] = useState(['Option 1', 'Option 2']);
-    const [validationStatus, setValidationStatus] = useState(false);
-    const [filesDropped, setFilesDropped] = useState(false);
-  
-    const handleSearchChange = (event) => {
-      setSearchText(event.target.value);
-    };
-  
-    const handleDeleteOption = (index) => {
-      const newOptions = [...options];
-      newOptions.splice(index, 1);
-      setOptions(newOptions);
-    };
-  
-    const handleDrop = (event) => {
-      event.preventDefault();
-      const files = event.dataTransfer.files;
-      const newOptions = [...options];
-      for (let i = 0; i < files.length; i++) {
-        newOptions.push(files[i].name);
-      }
-      setOptions(newOptions);
-      setFilesDropped(true);
-    };
-  
-    const handleButtonClick = () => {
-      document.getElementById('fileInput').click();
-    };
-  
-    const validateFields = () => {
-      return options.length > 0 && filesDropped;
-    };
-  
-    const handleValidationClick = () => {
-      const isValid = validateFields();
-      setValidationStatus(isValid);
-    };
-  
-    return (
-      <div style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: '25vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
-          <CardContent>
-            <Typography variant="h5" component="h4">
-              Curated Resources
-            </Typography>
-  
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }}
-                onClick={handleButtonClick}
-              >
-                Drag and Drop Files <CloudUploadIcon />
-              </Button>
-              <input
-                id="fileInput"
-                type="file"
-                style={{ display: 'none' }}
-                multiple
-                onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })}
-              />
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {options.map((option, index) => (
-                <div
-                  key={index}
-                  style={{ display: 'flex', alignItems: 'center', marginRight: '10px', marginBottom: '10px' }}
-                >
-                  <button
-                    style={{
-                      width: '10vw',
-                      backgroundColor: '#f1f1f1',
-                      border: 'none',
-                      padding: '10px',
-                      borderRadius: '5px',
-                      position: 'relative',
-                      color: 'purple',
-                    }}
-                  >
-                    {option}
-                    <ClearIcon
-                      style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer', width: '20px' }}
-                      onClick={() => handleDeleteOption(index)}
-                    />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <Typography variant="h5" component="h4">
-              Events
-            </Typography>
-  
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '43vw' }}
-                onClick={handleButtonClick}
-              >
-                Drag and Drop Files <CloudUploadIcon />
-              </Button>
-              <input
-                id="fileInput"
-                type="file"
-                style={{ display: 'none' }}
-                multiple
-                onChange={(event) => handleDrop({ dataTransfer: { files: event.target.files } })}
-              />
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <button
-                type="button"
-                onClick={handleValidationClick}
-                style={{
-                  backgroundColor: '#0077b6',
-                  borderRadius: '5px',
-                  color: 'white',
-                  height: '5vh',
-                  width: '10vw',
-                  marginBottom: '10px',
-                }}
-              >
-                VALIDATE FIELDS
-              </button>
-            </div>
-            {validationStatus && (
-              <div style={{ color: 'red', marginBottom: '10px' }}>
-                Validation {validationStatus ? 'successful' : 'failed'}.
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    );
+
+  // Define the functions at the parent component level
+  const handleDeleteOption = (index) => {
+    const newOptions = [...options];
+    newOptions.splice(index, 1);
+    setOptions(newOptions);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    const newOptions = [...options];
+    for (let i = 0; i < files.length; i++) {
+      newOptions.push(files[i].name);
+    }
+    setOptions(newOptions);
+    setFilesDropped(true);
+  };
+
+  const handleValidationClick = () => {
+    const isValid = validateFields();
+    setValidationStatus(isValid);
   };
 
   return (
-    <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
-      <div style={{ display: 'flex', alignItems: 'top-left' }}>
+    <div
+      className="card-wrapper"
+      style={{ display: "flex", alignItems: "stretch", flexGrow: 1 }}
+    >
+      <div style={{ display: "flex", alignItems: "top-left" }}>
         <MenuIcon />
       </div>
-      
-      <div className="card" style={{ position: 'relative', minWidth: '200px' }}>
-        <Card style={{ height: isExpanded ? '18vw' : '5vw', width:'43vw', cursor: 'pointer', margin: '10px', borderRadius: '10px' }} onClick={handleCardClick}>
-          <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+
+      <div className="card" style={{ position: "relative", minWidth: "200px" }}>
+        <Card
+          style={{
+            height: isExpanded ? "18vw" : "5vw",
+            width: "43vw",
+            cursor: "pointer",
+            margin: "10px",
+            borderRadius: "10px",
+          }}
+          onClick={handleCardClick}
+        >
+          <CardContent
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
               <IconButton edge="start" color="black" aria-label="menu" />
-              <div style={{ marginBottom: '10px' }}>
-                <Typography  component="h6">
-                  Resources
-                </Typography>
+              <div style={{ marginBottom: "10px" }}>
+                <Typography component="h6">Resources</Typography>
               </div>
               <div>
-                <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
+                <Link to={linkTo} onClick={handleLinkClick} style={{ position: "absolute", right: 0 }}>
                   <IconButton edge="start" color="black" aria-label="back">
                     <ArrowRightIcon />
                   </IconButton>
                 </Link>
               </div>
-              {isChecked && (
-                <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />
-              )}
+              {isChecked && <CheckCircleIcon style={{ marginLeft: "10px", color: "purple" }} />}
             </div>
             {isExpanded && (
-      <div style={{ display: 'flex', alignItems: 'left' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {/* First nested flexbox */}
-          <form className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'37vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} onSubmit={handleSubmit}>
-          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-              <MenuIcon /> 
-              Curated resources
-            </Typography>
-          </div>
+              <div style={{ display: "flex", alignItems: "left" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {/* First nested flexbox */}
+                  <form
+                    className="flexbox"
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "1px solid gray",
+                      width: "37vw",
+                      padding: "10px",
+                      marginBottom: "10px",
+                      borderRadius: "5px",
+                    }}
+                    onSubmit={handleSubmit}
+                  >
+                    <div
+                      className="flexbox"
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "1px solid gray",
+                        width: "35vw",
+                        padding: "10px",
+                        marginBottom: "10px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Typography variant="h7" component="h6" style={{ display: "flex", alignItems: "center" }}>
+                        <MenuIcon />
+                        Curated resources
+                      </Typography>
+                    </div>
 
-          {/* Second nested flexbox */}
-          <div className="flexbox" style={{ justifyContent: 'center', alignItems: 'center', border: '1px solid gray', width:'35vw', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-            <Typography variant="h7" component="h6" style={{ display: 'flex', alignItems: 'center' }}>
-              <MenuIcon /> 
-              Events
-            </Typography>
-          </div>
+                    {/* Second nested flexbox */}
+                    <div
+                      className="flexbox"
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "1px solid gray",
+                        width: "35vw",
+                        padding: "10px",
+                        marginBottom: "10px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Typography variant="h7" component="h6" style={{ display: "flex", alignItems: "center" }}>
+                        <MenuIcon />
+                        Events
+                      </Typography>
+                    </div>
 
-          
-          <button type="submit" style={{ backgroundColor: 'transparent', border: '1px dashed grey', color: 'purple', width: '36vw', display: 'flex', alignItems: 'center',justifyContent: 'center', }}>
-          <AddBoxOutlinedIcon style={{ marginRight: '5px' }} />ADD MORE
-          </button>
-          </form>
-          
-        </div>
-        
-      </div>
-    )}
+                    <button
+                      type="submit"
+                      style={{
+                        backgroundColor: "transparent",
+                        border: "1px dashed grey",
+                        color: "purple",
+                        width: "36vw",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AddBoxOutlinedIcon style={{ marginRight: "5px" }} />ADD MORE
+                    </button>
+                  </form>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
       {isFieldOpen && (
-        <div className="field" style={{ position: 'relative', flexGrow: 1 }}>
-          <OptionsPanel />
+        <div className="field" style={{ position: "relative", flexGrow: 1 }}>
+          <OptionsPanel
+            handleDeleteOption={handleDeleteOption}
+            handleDrop={handleDrop}
+            options={options}
+          />
         </div>
       )}
 
       {/* Display error messages for the title field */}
-      {!validationResults.title && (
-        <div style={{ color: 'red' }}>{errorMessages.title}</div>
-      )}
+      {!validationResults.title && <div style={{ color: "red" }}>{errorMessages.title}</div>}
     </div>
   );
-}
+};
+
+const OptionsPanel = ({ handleDeleteOption, handleDrop, options }) => {
+  const [validationStatus, setValidationStatus] = useState(false);
+  const [filesDropped, setFilesDropped] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
+
+  const resourcesFileInputRef = useRef(null);
+  const eventsFileInputRef = useRef(null);
+
+  const handleSaveUploads = (event) => {
+    // Get the uploaded files from the input element
+    const files = event.target.files;
+
+    // Perform actions to save the uploaded files in the options list
+    // For example, you can add the file names to the options array
+    // You might want to modify this logic based on your requirements
+    const newOptions = [...options];
+    for (let i = 0; i < files.length; i++) {
+      newOptions.push(files[i].name);
+    }
+    setOptions(newOptions);
+    setFilesDropped(true); // Update filesDropped status if needed
+  };
+
+  const handleValidationClick = () => {
+    const isValid = validateFields();
+    setValidationStatus(isValid);
+
+    if (isValid) {
+      setValidationMessage("Validation successful");
+    } else {
+      setValidationMessage("Validation failed");
+    }
+  };
+
+  const validateFields = () => {
+    return options.length > 0 && filesDropped;
+  };
+
+  return (
+    <div style={{ position: "relative", minWidth: "200px" }}>
+      <Card style={{ height: "25vw", width: "40vw", margin: "10px", borderRadius: "10px" }}>
+        <CardContent>
+          <Typography variant="h5" component="h4">
+            Curated Resources
+          </Typography>
+
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ backgroundColor: "transparent", border: "1px dashed grey", color: "purple", width: "43vw" }}
+              onClick={() => resourcesFileInputRef.current.click()}
+            >
+              Drag and Drop Files <CloudUploadIcon />
+            </Button>
+            <input
+              ref={resourcesFileInputRef}
+              type="file"
+              style={{ display: "none" }}
+              multiple
+              onChange={(event) => handleDrop(event)}
+            />
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {options.map((option, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", alignItems: "center", marginRight: "10px", marginBottom: "10px" }}
+              >
+                <button
+                  style={{
+                    width: "10vw",
+                    backgroundColor: "#f1f1f1",
+                    border: "none",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    position: "relative",
+                    color: "purple",
+                  }}
+                >
+                  {option}
+                  <ClearIcon
+                    style={{ position: "absolute", top: 0, right: 0, cursor: "pointer", width: "20px" }}
+                    onClick={() => handleDeleteOption(index)}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Events section */}
+          <Typography variant="h5" component="h4">
+            Events
+          </Typography>
+
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ backgroundColor: "transparent", border: "1px dashed grey", color: "purple", width: "43vw" }}
+              onClick={() => eventsFileInputRef.current.click()}
+            >
+              Drag and Drop Files <CloudUploadIcon />
+            </Button>
+            <input
+              ref={eventsFileInputRef}
+              type="file"
+              style={{ display: "none" }}
+              multiple
+              onChange={(event) => handleDrop(event)}
+            />
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+            <button
+              type="button"
+              onClick={handleValidationClick}
+              style={{
+                backgroundColor: "purple",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                padding: "10px",
+                marginTop: "10px",
+              }}
+            >
+              Validate
+            </button>
+          </div>
+          <div style={{ color: validationStatus ? "green" : "red" }}>{validationMessage}</div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+
 const AddChapterButton = ({ onAddCard }) => {
   const handleAddMore = () => {
     onAddCard();
