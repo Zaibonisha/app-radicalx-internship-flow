@@ -1,9 +1,14 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { LineStyle, Timeline, TrendingUp, BarChart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import '../css/component/sidebar.css';
 import LogoutIcon from '@mui/icons-material/Logout';
+
+// Import your PNG images
+import book from '../assets/book.png';
+import medal_star from '../assets/medal_star.png';
+import briefcase from '../assets/briefcase.png';
+import setting from '../assets/setting.png';
 
 function Sidebar({ isLoggedIn, userName, onLogout }) {
   return (
@@ -16,20 +21,20 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
           <ul className="sidebarList">
             <Link to="/" className="link">
               <li className="sidebarListItem active">
-                <LineStyle className="sidebarIcon" />
+                <img src={book} alt="book" className="sidebarIcon" />
                 <h2>Internships</h2>
               </li>
             </Link>
             <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              <h2>Apprenterships</h2>
+              <img src={medal_star} alt="medal" className="sidebarIcon" />
+              <h2>Apprenticeships</h2>
             </li>
             <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
+              <img src={briefcase} alt="TrendingUp" className="sidebarIcon" />
               <h2>Jobs</h2>
             </li>
             <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
+              <img src={setting} alt="setting" className="sidebarIcon" />
               <h2>Settings</h2>
             </li>
           </ul>
