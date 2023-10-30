@@ -417,10 +417,10 @@ const Benefits = ({ linkTo }) => {
   const handleValidation = () => {
     if (!validateFields()) {
       setValidationMessage('Validation failed. Please check your inputs.');
-      return;
+    } else {
+      setValidationMessage(''); // Clear the validation message if validation is successful
+      addInternshipToDatabase();
     }
-    setValidationMessage('');
-    addInternshipToDatabase();
   };
 
   const addInternshipToDatabase = () => {
@@ -431,7 +431,7 @@ const Benefits = ({ linkTo }) => {
     // Make a request to your database or API to add the internship object
     // Use the values from the searchText or any other necessary fields
     // Example using fetch:
-    fetch('https://internship-flow-radicalx-app.web.app/api/internships', {
+    fetch('https://internship-flow-radicalx-app.web.app/api/newInternship', {
       method: 'POST',
       body: JSON.stringify({ searchText }), // Modify this according to your data structure
       headers: {
@@ -514,6 +514,7 @@ const Benefits = ({ linkTo }) => {
   );
 };
 
+
 const IntroVideos = ({
   title,
   description,
@@ -524,7 +525,7 @@ const IntroVideos = ({
 }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [options, setOptions] = useState(['Intro Videos.mp4']);
+  const [options] = useState(['Intro Videos.mp4']);
   const [validationMessage, setValidationMessage] = useState('');
 
   const handleLinkClick = () => {
@@ -539,13 +540,13 @@ const IntroVideos = ({
     for (let i = 0; i < files.length; i++) {
       newOptions.push(files[i].name);
     }
-    setOptions(newOptions);
+    
   };
 
   const handleDeleteOption = (index) => {
     const newOptions = [...options];
     newOptions.splice(index, 1);
-    setOptions(newOptions);
+    
   };
 
   const handleButtonClick = () => {
@@ -917,7 +918,7 @@ const Roles = ({ title, description, location, category, categoryDescription, li
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [options, setOptions] = useState(['Fullstack Developer', 'Backend Developer']);
+  const [options] = useState(['Fullstack Developer', 'Backend Developer']);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLinkClick = () => {
@@ -960,7 +961,7 @@ const Roles = ({ title, description, location, category, categoryDescription, li
   const handleDeleteOption = (index) => {
     const newOptions = [...options];
     newOptions.splice(index, 1);
-    setOptions(newOptions);
+    
   };
 
   const handleRequestError = (error) => {

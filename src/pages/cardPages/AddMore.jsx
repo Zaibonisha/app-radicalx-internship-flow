@@ -1,4 +1,4 @@
-import React, { useState, useRef, setOptions  } from 'react';
+import React, { useState, useRef   } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -93,7 +93,7 @@ const Overview = ({ title, description, location, category, categoryDescription,
   };
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
-    const [options, setOptions] = useState(['Option 1', 'Option 2']);
+    const [options] = useState(['Option 1', 'Option 2']);
 
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
@@ -102,7 +102,7 @@ const Overview = ({ title, description, location, category, categoryDescription,
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
-      setOptions(newOptions);
+      
     };
 
     const handleDrop = (event) => {
@@ -112,7 +112,7 @@ const Overview = ({ title, description, location, category, categoryDescription,
       for (let i = 0; i < files.length; i++) {
         newOptions.push(files[i].name);
       }
-      setOptions(newOptions);
+      
     };
 
     const handleButtonClick = () => {
@@ -346,7 +346,7 @@ const ScheduleField = ({ title, description, location, category, categoryDescrip
   };
   const OptionsPanel = () => {
     const [searchText, setSearchText] = useState('');
-    const [options, setOptions] = useState(['Option 1', 'Option 2']);
+    const [options] = useState(['Option 1', 'Option 2']);
 
     const handleSearchChange = (event) => {
       setSearchText(event.target.value);
@@ -355,7 +355,7 @@ const ScheduleField = ({ title, description, location, category, categoryDescrip
     const handleDeleteOption = (index) => {
       const newOptions = [...options];
       newOptions.splice(index, 1);
-      setOptions(newOptions);
+      
     };
 
     const handleDrop = (event) => {
@@ -365,7 +365,7 @@ const ScheduleField = ({ title, description, location, category, categoryDescrip
       for (let i = 0; i < files.length; i++) {
         newOptions.push(files[i].name);
       }
-      setOptions(newOptions);
+      
     };
 
     const handleButtonClick = () => {
@@ -549,7 +549,7 @@ const Resources = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [validationResults, setValidationResults] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
-  const [options, setOptions] = useState(["Option 1", "Option 2"]);
+  const [options] = useState(["Option 1", "Option 2"]);
   const [validationStatus, setValidationStatus] = useState(false);
   const [filesDropped, setFilesDropped] = useState(false);
 
@@ -636,7 +636,7 @@ const Resources = ({
   const handleDeleteOption = (index) => {
     const newOptions = [...options];
     newOptions.splice(index, 1);
-    setOptions(newOptions);
+    
   };
 
   const handleDrop = (event) => {
@@ -646,7 +646,7 @@ const Resources = ({
     for (let i = 0; i < files.length; i++) {
       newOptions.push(files[i].name);
     }
-    setOptions(newOptions);
+    
     setFilesDropped(true);
   };
 
@@ -806,7 +806,7 @@ const OptionsPanel = ({ handleDeleteOption, handleDrop, options }) => {
     for (let i = 0; i < files.length; i++) {
       newOptions.push(files[i].name);
     }
-    setOptions(newOptions);
+    
     setFilesDropped(true); // Update filesDropped status if needed
   };
 

@@ -17,20 +17,20 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
             <Link to="/" className="link">
               <li className="sidebarListItem active">
                 <LineStyle className="sidebarIcon" />
-                <h2>Home</h2>
+                <h2>Internships</h2>
               </li>
             </Link>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
-              <h2>Total Enrolments</h2>
+              <h2>Apprenterships</h2>
             </li>
             <li className="sidebarListItem">
               <TrendingUp className="sidebarIcon" />
-              <h2>Completion</h2>
+              <h2>Jobs</h2>
             </li>
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
-              <h2>Reports</h2>
+              <h2>Settings</h2>
             </li>
           </ul>
           {isLoggedIn && (
