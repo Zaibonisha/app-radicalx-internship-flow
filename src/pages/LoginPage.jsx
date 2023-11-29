@@ -17,7 +17,7 @@ function LoginPage({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (username === 'Nisha' && password === '12345') {
+    if (username === 'Zaibonisha' && password === '12345') {
       onLogin(username);
       setUsername('');
       setPassword('');
