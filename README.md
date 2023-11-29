@@ -18,7 +18,7 @@ Instalations:
 * Title
 
 
-Username: Zaibonsiha
+Username: Zaibonisha
 Password: 12345
 
 In the project directory, you can run:
