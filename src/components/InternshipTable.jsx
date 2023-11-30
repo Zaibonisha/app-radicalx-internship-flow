@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
 import '../css/component/internshipTable.css';
-import LocationCitySharpIcon from '@mui/icons-material/LocationCitySharp';
-import WorkspacesIcon from '@mui/icons-material/Workspaces';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import chart from '../assets/chart.png';
+import profile from '../assets/profile.png';
+import more from '../assets/more.png';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 function InternshipTable() {
@@ -81,7 +81,9 @@ function InternshipTable() {
           </div>
           </div>
           </td>
-          <td className="widgetLgWG"><LocationCitySharpIcon/><WorkspacesIcon/><PeopleAltIcon /></td>
+          <img src={chart} alt="chart" style={{ width: '50px', height: '50px' }} />
+          <img src={profile} alt="profile" style={{ width: '50px', height: '50px' }} />
+          <img src={more} alt="more" style={{ width: '50px', height: '50px' }} />
         </tr>
         <tr className="widgetLgTr">
           <td className="widgetInternship" icons-cell>
@@ -103,7 +105,9 @@ function InternshipTable() {
           </div>
           </div>
           </td>
-          <td className="widgetLgWG"><LocationCitySharpIcon/><WorkspacesIcon/><PeopleAltIcon /></td>
+          <img src={chart} alt="chart" style={{ width: '50px', height: '50px' }} />
+          <img src={profile} alt="profile" style={{ width: '50px', height: '50px' }} />
+          <img src={more} alt="more" style={{ width: '50px', height: '50px' }} />
         </tr>
         <tr className="widgetLgTr">
           <td className="widgetInternship">
@@ -125,7 +129,9 @@ function InternshipTable() {
           </div>
           </div>
           </td>
-          <td className="widgetLgWG"><LocationCitySharpIcon/><WorkspacesIcon/><PeopleAltIcon /></td>
+          <img src={chart} alt="chart" style={{ width: '50px', height: '50px' }} />
+          <img src={profile} alt="profile" style={{ width: '50px', height: '50px' }} />
+          <img src={more} alt="more" style={{ width: '50px', height: '50px' }} />
         </tr>
         <tr className="widgetLgTr">
           <td className="widgetInternship">
@@ -148,7 +154,9 @@ function InternshipTable() {
           </div>
           </td>
 
-          <td className="widgetLgWG"><LocationCitySharpIcon/><WorkspacesIcon/><PeopleAltIcon /></td>
+          <img src={chart} alt="chart" style={{ width: '50px', height: '50px' }} />
+          <img src={profile} alt="profile" style={{ width: '50px', height: '50px' }} />
+          <img src={more} alt="more" style={{ width: '50px', height: '50px' }} />
         </tr>
       </table>
     </div>
