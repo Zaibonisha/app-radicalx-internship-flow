@@ -20,7 +20,7 @@ Instalations:
 
 In the project directory, you can run:
 
-### `Demo`
+### `Link`
 https://internship-flow-radicalx-app.web.app
 
 
