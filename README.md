@@ -1,8 +1,5 @@
-# Getting Started with Create React App
+# Internship Dashboard Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-npx create-react-app intern-dashboard
-cd intern-dashboard
 
 Instalations:
 * npm i recharts
@@ -23,18 +20,13 @@ Instalations:
 
 In the project directory, you can run:
 
-### `Link to deployed website`
+### `Link`
 https://internship-flow-radicalx-app.web.app
 
 
 
-### `Overview`
+### `Images`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-
-### Deployment
 
 
 
