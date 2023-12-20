@@ -31,11 +31,12 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
               <h2>Apprenticeships</h2>
             </li>
             </Link>
-            
+            <Link to="/jobs" className="link">
             <li className="sidebarListItem">
               <img src={briefcase} alt="TrendingUp" className="sidebarIcon" />
               <h2>Jobs</h2>
             </li>
+            </Link>
             <li className="sidebarListItem">
               <img src={setting} alt="setting" className="sidebarIcon" />
               <h2>Settings</h2>

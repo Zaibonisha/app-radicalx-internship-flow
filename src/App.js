@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import "./App.css";
 import Home from "./pages/Home";
 import Apprenticeship from "./pages/Apprenticeship";
+import Jobs from "./pages/Jobs";
 import NewInternship from "./pages/newInternship/NewInternship";
 import AddMore from "./pages/cardPages/AddMore";
 import AddSurvey from "./pages/cardPages/AddSurvey";
@@ -43,6 +44,9 @@ function Main() {
           )} />
           <Route exact path="/apprenticeship" render={() => (
             isLoggedIn ? <Apprenticeship /> : <Redirect to="/login" />
+          )} />
+          <Route exact path="/jobs" render={() => (
+            isLoggedIn ? <Jobs /> : <Redirect to="/login" />
           )} />
           <Route exact path="/newInternship" render={() => (
             isLoggedIn ? <NewInternship /> : <Redirect to="/login" />
