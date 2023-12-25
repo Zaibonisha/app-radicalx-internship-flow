@@ -37,10 +37,12 @@ function Sidebar({ isLoggedIn, userName, onLogout }) {
               <h2>Jobs</h2>
             </li>
             </Link>
+            <Link to="/settingsdash" className="link">
             <li className="sidebarListItem">
               <img src={setting} alt="setting" className="sidebarIcon" />
               <h2>Settings</h2>
             </li>
+            </Link>
           </ul>
           {isLoggedIn && (
            <div className="avatarSection">
