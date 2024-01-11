@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 
 const cardStyles = {
-  width: '200px', 
-  height: '250px', 
-  marginBottom: '20px',
+  width: '20vw', 
+  height: '25vh', 
+  marginBottom: '50px',
 };
 
 const apprenticeshipStyles = {
