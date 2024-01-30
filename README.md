@@ -18,7 +18,7 @@ Instalations:
 * Username: Zaibonisha
 * Password: 12345
 
-In the project directory, you can run:
+In the project directory, you can run: npm start or use the link below
 
 ### `Link`
 https://internship-flow-radicalx-app.web.app
