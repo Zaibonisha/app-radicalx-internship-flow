@@ -1,5 +1,5 @@
 # Internship Dashboard Application
-Admin dashboard for radical X internships and insights
+Admin dashboard for Radical X internships and insights
 
 Instalations:
 * npm i recharts
