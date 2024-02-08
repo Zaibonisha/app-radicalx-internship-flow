@@ -12,7 +12,7 @@ const MyCardComponent = ({ title, description }) => {
     <Grid container spacing={0.5} style={{ height: '30vw', width: '99%', marginTop: '55px', backgroundColor:'white' }}>
       
       <Grid item xs={4.5}>
-        <Card style={{ height: '53vh', width: '100%', backgroundColor:'aliceblue'}}>
+        <Card style={{ height: '54vh', width: '100%', backgroundColor:'aliceblue'}}>
           <CardContent>
             <Typography variant="h5" component="h4">
               Internship Insights
