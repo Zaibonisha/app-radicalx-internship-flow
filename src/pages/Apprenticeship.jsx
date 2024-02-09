@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Button } from '@mui/material';
+import { Card, CardContent, Button, TextField } from '@mui/material';
 
 const cardStyles = {
-  width: '200px', 
-  height: '250px', 
+  width: '200px',
+  height: '250px',
   marginBottom: '20px',
   marginRight: '20px', // Add margin to create space between cards
 };
@@ -19,12 +19,14 @@ const apprenticeshipStyles = {
 const Apprenticeship = () => {
   const [apprenticeships, setApprenticeships] = useState(() => {
     const storedApprenticeships = localStorage.getItem('apprenticeships');
-    return storedApprenticeships ? JSON.parse(storedApprenticeships) : [
-      { title: 'Apprenticeship 1', description: 'Description for Job 1.' },
-      { title: 'Apprenticeship 2', description: 'Description for Job 2.' },
-      { title: 'Apprenticeship 3', description: 'Description for Job 3.' },
-      { title: 'Apprenticeship 4', description: 'Description for Job 4.' },
-    ];
+    return storedApprenticeships
+      ? JSON.parse(storedApprenticeships)
+      : [
+          { id: 1 },
+          { id: 2 },
+          { id: 3 },
+          { id: 4 },
+        ];
   });
 
   useEffect(() => {
@@ -34,24 +36,41 @@ const Apprenticeship = () => {
   const addCard = () => {
     const newApprenticeships = [...apprenticeships];
     newApprenticeships.push({
-      title: `Apprenticeship ${newApprenticeships.length + 1}`,
-      description: `Description for Job ${newApprenticeships.length + 1}.`,
+      id: new Date().getTime(), // generate unique id
     });
     setApprenticeships(newApprenticeships);
+  };
+
+  const handleEdit = (id, updatedTitle, updatedDescription) => {
+    const updatedApprenticeships = apprenticeships.map((apprenticeship) => {
+      if (apprenticeship.id === id) {
+        return {
+          ...apprenticeship,
+          title: updatedTitle,
+          description: updatedDescription,
+        };
+      }
+      return apprenticeship;
+    });
+    setApprenticeships(updatedApprenticeships);
   };
 
   return (
     <div style={{ width: '80%', margin: '0 auto' }}>
       <div style={apprenticeshipStyles}>
-        {apprenticeships.map((apprenticeship, index) => (
-          <Card key={index} style={cardStyles}>
+        {apprenticeships.map((apprenticeship) => (
+          <Card key={apprenticeship.id} style={cardStyles}>
             <CardContent>
-              <Typography variant="h5" component="div">
-                {apprenticeship.title}
-              </Typography>
-              <Typography color="text.secondary">
-                {apprenticeship.description}
-              </Typography>
+              <TextField
+                label="Title"
+                defaultValue={apprenticeship.title}
+                onChange={(e) => handleEdit(apprenticeship.id, e.target.value, apprenticeship.description)}
+              />
+              <TextField
+                label="Description"
+                defaultValue={apprenticeship.description}
+                onChange={(e) => handleEdit(apprenticeship.id, apprenticeship.title, e.target.value)}
+              />
             </CardContent>
           </Card>
         ))}
@@ -64,4 +83,3 @@ const Apprenticeship = () => {
 };
 
 export default Apprenticeship;
-
