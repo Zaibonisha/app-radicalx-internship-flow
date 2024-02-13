@@ -55,6 +55,11 @@ const Apprenticeship = () => {
     setApprenticeships(updatedApprenticeships);
   };
 
+  const deleteCard = (id) => {
+    const updatedApprenticeships = apprenticeships.filter((apprenticeship) => apprenticeship.id !== id);
+    setApprenticeships(updatedApprenticeships);
+  };
+
   return (
     <div style={{ width: '80%', margin: '0 auto' }}>
       <div style={apprenticeshipStyles}>
@@ -72,11 +77,12 @@ const Apprenticeship = () => {
                 onChange={(e) => handleEdit(apprenticeship.id, apprenticeship.title, e.target.value)}
               />
             </CardContent>
+            <Button onClick={() => deleteCard(apprenticeship.id)} color="secondary">Delete</Button>
           </Card>
         ))}
       </div>
       <Button onClick={addCard} variant="contained" color="primary">
-        Add Card
+        Add Apprenticeship
       </Button>
     </div>
   );
