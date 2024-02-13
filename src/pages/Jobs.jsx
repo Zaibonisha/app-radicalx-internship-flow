@@ -8,7 +8,7 @@ const cardStyles = {
   marginRight: '20px', // Add margin to create space between cards
 };
 
-const apprenticeshipStyles = {
+const jobsStyles = {
   width: '80%',
   margin: '0 auto',
   display: 'flex',
@@ -17,59 +17,61 @@ const apprenticeshipStyles = {
 };
 
 const Jobs = () => {
-  const [apprenticeships, setApprenticeships] = useState(() => {
-    const storedApprenticeships = localStorage.getItem('apprenticeships');
-    return storedApprenticeships
-      ? JSON.parse(storedApprenticeships)
+  const [jobs, setJobs] = useState(() => {
+    const storedJobs = localStorage.getItem('jobs');
+    return storedJobs
+      ? JSON.parse(storedJobs)
       : [
-          { id: 1 },
-          { id: 2 },
-          { id: 3 },
-          { id: 4 },
+          { id: 1, title: "", description: "" },
+          { id: 2, title: "", description: "" },
+          { id: 3, title: "", description: "" },
+          { id: 4, title: "", description: "" },
         ];
   });
 
   useEffect(() => {
-    localStorage.setItem('apprenticeships', JSON.stringify(apprenticeships));
-  }, [apprenticeships]);
+    localStorage.setItem('jobs', JSON.stringify(jobs));
+  }, [jobs]);
 
   const addCard = () => {
-    const newApprenticeships = [...apprenticeships];
-    newApprenticeships.push({
+    const newJobs = [...jobs];
+    newJobs.push({
       id: new Date().getTime(), // generate unique id
+      title: "",
+      description: ""
     });
-    setApprenticeships(newApprenticeships);
+    setJobs(newJobs);
   };
 
   const handleEdit = (id, updatedTitle, updatedDescription) => {
-    const updatedApprenticeships = apprenticeships.map((apprenticeship) => {
-      if (apprenticeship.id === id) {
+    const updatedJobs = jobs.map((job) => {
+      if (job.id === id) {
         return {
-          ...apprenticeship,
+          ...job,
           title: updatedTitle,
           description: updatedDescription,
         };
       }
-      return apprenticeship;
+      return job;
     });
-    setApprenticeships(updatedApprenticeships);
+    setJobs(updatedJobs);
   };
 
   return (
     <div style={{ width: '80%', margin: '0 auto' }}>
-      <div style={apprenticeshipStyles}>
-        {apprenticeships.map((apprenticeship) => (
-          <Card key={apprenticeship.id} style={cardStyles}>
+      <div style={jobsStyles}>
+        {jobs.map((job) => (
+          <Card key={job.id} style={cardStyles}>
             <CardContent>
               <TextField
                 label="Title"
-                defaultValue={apprenticeship.title}
-                onChange={(e) => handleEdit(apprenticeship.id, e.target.value, apprenticeship.description)}
+                value={job.title}
+                onChange={(e) => handleEdit(job.id, e.target.value, job.description)}
               />
               <TextField
                 label="Description"
-                defaultValue={apprenticeship.description}
-                onChange={(e) => handleEdit(apprenticeship.id, apprenticeship.title, e.target.value)}
+                value={job.description}
+                onChange={(e) => handleEdit(job.id, job.title, e.target.value)}
               />
             </CardContent>
           </Card>
