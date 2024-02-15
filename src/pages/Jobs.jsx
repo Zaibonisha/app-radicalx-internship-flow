@@ -22,10 +22,10 @@ const Jobs = () => {
     return storedJobs
       ? JSON.parse(storedJobs)
       : [
-          { id: 1, title: "", description: "" },
-          { id: 2, title: "", description: "" },
-          { id: 3, title: "", description: "" },
-          { id: 4, title: "", description: "" },
+          { id: 1, title: '', description: '' },
+          { id: 2, title: '', description: '' },
+          { id: 3, title: '', description: '' },
+          { id: 4, title: '', description: '' },
         ];
   });
 
@@ -37,8 +37,8 @@ const Jobs = () => {
     const newJobs = [...jobs];
     newJobs.push({
       id: new Date().getTime(), // generate unique id
-      title: "",
-      description: ""
+      title: '',
+      description: '',
     });
     setJobs(newJobs);
   };
@@ -54,6 +54,11 @@ const Jobs = () => {
       }
       return job;
     });
+    setJobs(updatedJobs);
+  };
+
+  const handleDelete = (id) => {
+    const updatedJobs = jobs.filter((job) => job.id !== id);
     setJobs(updatedJobs);
   };
 
@@ -73,6 +78,9 @@ const Jobs = () => {
                 value={job.description}
                 onChange={(e) => handleEdit(job.id, job.title, e.target.value)}
               />
+              <Button onClick={() => handleDelete(job.id)} color="error">
+                Delete
+              </Button>
             </CardContent>
           </Card>
         ))}

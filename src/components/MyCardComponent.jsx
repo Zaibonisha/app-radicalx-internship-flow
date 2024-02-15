@@ -18,7 +18,7 @@ const MyCardComponent = ({ title, description }) => {
               Internship Insights
             </Typography>
             <Typography color="black">
-              In the eighteenth century, the German philosopher Immanuel Kant developed a theory of knowledge in which knowledge about space can be both a priori and synthetic.
+              In the eighteenth century, the German philosopher Immanuel Kant developed a theory of knowledge in which knowledge about space can be both a priority and synthetic.
             </Typography>
           </CardContent>
         </Card>
