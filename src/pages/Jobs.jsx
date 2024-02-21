@@ -86,7 +86,7 @@ const Jobs = () => {
         ))}
       </div>
       <Button onClick={addCard} variant="contained" color="primary">
-        Add Card
+        Add Job
       </Button>
     </div>
   );
