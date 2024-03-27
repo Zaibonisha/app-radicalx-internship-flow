@@ -30,6 +30,7 @@ const Category = ({ linkTo }) => {
   const [isFieldOpen, setIsFieldOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -56,11 +57,21 @@ const Category = ({ linkTo }) => {
     return value.length > 0;
   };
 
+  const handleCategorySelect = (category) => {
+    setSelectedCategories(prevCategories => {
+      const index = prevCategories.indexOf(category);
+      if (index === -1) {
+        return [...prevCategories, category];
+      } else {
+        return prevCategories.filter(cat => cat !== category);
+      }
+    });
+  };
+
   const addInternshipToDatabase = () => {
     if (!isValid) {
       return;
     }
-  
 
     // Make a request to your database or API to add the internship object
     // Use the value from the searchText or any other necessary fields
@@ -87,7 +98,7 @@ const Category = ({ linkTo }) => {
 
   const OptionsPanel = () => (
     <div style={{ position: 'relative', minWidth: '200px' }}>
-      <Card style={{ height: '10vw', width: '40vw', margin: '10px', borderRadius: '10px' }}>
+      <Card style={{ height: 'auto', width: '40vw', margin: '10px', borderRadius: '10px' }}>
         <CardContent>
           <Typography variant="h5" component="h4">
             Category
@@ -111,10 +122,29 @@ const Category = ({ linkTo }) => {
               {errorMessage}
             </Typography>
           )}
+
+          {/* Category options */}
+          <div>
+            <Typography variant="h6">Categories:</Typography>
+            {categories.map(category => (
+              <Button
+                key={category}
+                variant={selectedCategories.includes(category) ? "contained" : "outlined"}
+                color="primary"
+                onClick={() => handleCategorySelect(category)}
+                style={{ margin: '5px' }}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
   );
+
+  // Example categories
+  const categories = ['Category 1', 'Category 2', 'Category 3'];
 
   return (
     <div className="card-wrapper" style={{ display: 'flex', alignItems: 'stretch', flexGrow: 1 }}>
@@ -132,11 +162,10 @@ const Category = ({ linkTo }) => {
               {isChecked && <CheckCircleIcon style={{ marginLeft: '10px', color: 'purple' }} />}
             </div>
             <Link to={linkTo} onClick={handleLinkClick} style={{ position: 'absolute', right: 0 }}>
-             <IconButton edge="start" color="black" aria-label="back">
-             <ArrowRightIcon />
-             </IconButton>
+              <IconButton edge="start" color="black" aria-label="back">
+                <ArrowRightIcon />
+              </IconButton>
             </Link>
-
           </CardContent>
         </Card>
       </div>
